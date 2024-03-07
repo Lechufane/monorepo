@@ -1,0 +1,9 @@
+{
+  "TESTING": {
+    "name": "TESTING",
+    "database": "blogger_author",
+    "username": "root",
+    "host": "localhost",
+    "port": "3307"
+  }
+}
