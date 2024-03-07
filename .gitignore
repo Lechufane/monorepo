@@ -1,0 +1,4 @@
+cmd/__debug_bin
+.env
+#vscode 
+.vscode/settings.json
