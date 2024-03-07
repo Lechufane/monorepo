@@ -1,0 +1,4 @@
+.env
+cmd/__debug_bin
+cmd/__debug_bin/*
+__debug_bin*

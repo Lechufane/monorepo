@@ -16,6 +16,7 @@ type Handler interface {
 	GetAllBlog() (interface{}, response.Status)
 	UpdateBlog(blog blog.Blog) response.Status
 	DeleteBlogById(blogId int) response.Status
+	GetAllBlogsByAuthorId(authorId int) (interface{}, response.Status)
 }
 
 func (bh *BlogHandler) CreateBlog(blog blog.Blog) (interface{}, response.Status) {
@@ -36,4 +37,8 @@ func (bh *BlogHandler) UpdateBlog(blog blog.Blog) response.Status {
 
 func (bh *BlogHandler) DeleteBlogById(blogId int) response.Status {
 	return bh.Repository.DeleteBlogById(blogId)
+}
+
+func (bh *BlogHandler) GetAllBlogsByAuthorId(authorId int) (interface{}, response.Status) {
+	return bh.Repository.GetAllBlogsByAuthorId(authorId)
 }

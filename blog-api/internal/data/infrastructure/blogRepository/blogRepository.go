@@ -17,6 +17,7 @@ type Repository interface {
 	GetBlogById(blogId int) (blog.Blog, response.Status)
 	UpdateBlog(blog blog.Blog) response.Status
 	DeleteBlogById(blogId int) response.Status
+	GetAllBlogsByAuthorId(authorId int) ([]blog.Blog, response.Status)
 }
 
 func (br *BlogRepository) CreateBlog(blog *blog.Blog) (*blog.Blog, response.Status) {
@@ -85,4 +86,18 @@ func (br *BlogRepository) DeleteBlogById(blogId int) response.Status {
 		return response.DBExecutionError
 	}
 	return response.SuccessfulDeletion
+}
+
+func (br *BlogRepository) GetAllBlogsByAuthorId(authorId int) ([]blog.Blog, response.Status) {
+	var blogs []blog.Blog
+	db := databaseHelpers.Db
+	result := db.Where("author_id = ?", authorId).Find(&blogs)
+	if err := result.Error; err != nil {
+		if result.Error.Error() == gorm.ErrRecordNotFound.Error() {
+			return blogs, response.BlogNotFound
+		}
+		return blogs, response.InternalServerError
+	}
+
+	return blogs, response.BlogFound
 }
