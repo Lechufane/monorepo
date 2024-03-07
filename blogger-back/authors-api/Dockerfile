@@ -1,13 +1,19 @@
-FROM golang:1.20-alpine3.19
+FROM golang:alpine AS build
 
-RUN mkdir /app
+# GOPROXY resolves dependencies treefrom cache or repository
+ENV GOPROXY=https://proxy.golang.org
+ENV PORT=8082
 
-ADD . /app
+WORKDIR /go/src/api
+COPY . .
+# Set OS as linux
+RUN GOOS=linux go build -o /go/bin/api cmd/main.go
 
-WORKDIR /app
+EXPOSE 8082
 
-RUN go build -o cmd main
+FROM alpine
+COPY --from=build /go/bin/api /go/bin/api
+ENTRYPOINT ["go/bin/api"]
 
-CMD ["/app/main"]
-
-
+#Run migrations with the following command
+CMD ["api", "migrateup"]

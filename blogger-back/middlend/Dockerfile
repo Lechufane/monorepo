@@ -2,6 +2,8 @@ FROM golang:alpine AS build
 
 # GOPROXY resolves dependencies treefrom cache or repository
 ENV GOPROXY=https://proxy.golang.org
+ENV PORT=8080
+ENV BASE_URL=http://localhost:8080
 
 WORKDIR /go/src/api
 COPY . .

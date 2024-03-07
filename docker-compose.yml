@@ -1,0 +1,31 @@
+version: "3.9"  # Specify the Docker Compose version
+
+networks:
+  mynet:  # Create a custom network
+
+services:
+  database:
+    image: mysql:latest  # Use the official MySQL image (you can choose a specific version if needed)
+    restart: always  # Restart the container automatically unless manually stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: root  # Set the root password (replace with a strong password)
+      MYSQL_DATABASE: blogger_author  # Create a database named blogger_author
+    volumes:
+      - ./init.sql:/docker-entrypoint-initdb.d/init.sql # Execute the SQL commands when the container starts
+    ports:
+      - "3306:3306"  # Map the container port 36 to host port 3306
+    networks:
+      - mynet  # Connect the container to the custom network
+  authors-api:
+    build: ./blogger-back/authors-api # Build the Dockerfile in the specified directory
+    restart: always  # Restart the container automatically unless manually stopped
+    environment:
+      - PORT=8082  # Set the PORT environment variable
+      - DB=root:root@(database:3306) # Sthis is a 
+    ports: 
+      - "8082:8082"  # Map the container port 3000 to host port 3000
+    networks:
+      - mynet  # Connect the container to the custom network
+    depends_on:
+      - database  # Wait until the database container is ready before starting this container
+

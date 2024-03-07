@@ -2,7 +2,9 @@ package main
 
 import (
 	"blogger-author-api/internal/server"
+	"fmt"
 	"log"
+	"os"
 )
 
 // @title Template
@@ -11,8 +13,9 @@ import (
 
 func main() {
 	// When using local development uncomment this line of code with your own port
-	port := "8082"
-	// port := os.Getenv("PORT")
+
+	port := os.Getenv("PORT")
+	fmt.Println("Server running on port: ", port)
 
 	serv, err := server.New(port)
 	if err != nil {

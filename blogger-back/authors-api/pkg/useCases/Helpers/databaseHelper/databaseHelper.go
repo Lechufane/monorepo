@@ -1,6 +1,8 @@
 package databaseHelpers
 
 import (
+	"fmt"
+	"os"
 	"time"
 
 	"gorm.io/driver/mysql"
@@ -11,10 +13,11 @@ import (
 var (
 	Db            *gorm.DB
 	parseTimeFlag = "?parseTime=true"
-	connectionUrl = "root:my-secret-pw@tcp(localhost:3307)" + "/blogger_author" + parseTimeFlag
+	connectionUrl = os.Getenv("DB") + "/blogger_author" + parseTimeFlag
 )
 
 func InitDB() *gorm.DB {
+	fmt.Println("DB URL: ", connectionUrl)
 	var mysqlTimeFormat = "2006-01-02 15:04:05"
 	//fmt.Println("INIT CALL")
 	var err error
@@ -41,6 +44,7 @@ func InitDB() *gorm.DB {
 	db, err := gorm.Open(mysql.Open(connectionUrl), &config)
 	db.Debug()
 	if err != nil {
+		fmt.Println("Error connecting to database", err)
 		panic(err.Error())
 	}
 	sqlDB, err := db.DB()
