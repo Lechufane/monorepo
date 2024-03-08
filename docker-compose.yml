@@ -54,4 +54,18 @@ services:
     depends_on:
       - authors-api  # Wait until the authors-api container is ready before starting this container
       - blogs-api  # Wait until the blogs-api container is ready before starting this container
-      
+  frontend:
+    build: ./blogger-front/frontend # Build the Dockerfile in the specified directory
+    restart: always  # Restart the container automatically unless manually stopped
+    environment:
+      - PORT=3000  # Set the PORT environment variable
+      - MIDDLEND=http://middlend:8080  # Set the MIDDLEND environment variable
+    ports:
+      - "3000:3000"  # Map the container port 3000 to host port 3000
+    networks:
+      - mynet  # Connect the container to the custom network
+    depends_on:
+      - middlend  # Wait until the middlend container is ready before starting this container
+  
+volumes:
+  dbdata:  # Create a named volume
