@@ -6,6 +6,12 @@
   --foreground-rgb: 0, 0, 0;
   --background-start-rgb: 214, 219, 220;
   --background-end-rgb: 255, 255, 255;
+  /* -- Breakpoints (reference for max-width) -- */
+  --mobile: 320px;
+  --tablet: 768px;
+  --desktop: 1024px;
+  --large-desktop: 1400px;
+  font-size: 16px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -30,4 +36,30 @@ body {
   .text-balance {
     text-wrap: balance;
   }
+}
+
+@font-face {
+  font-family: "Bebas Neue";
+  src: url("/fonts/BebasNeue-Regular.ttf") format("truetype");
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Smooch Sans";
+  src: url("/fonts/SmoochSans-Regular.ttf") format("truetype"),
+    url("/fonts/SmoochSans-Bold.ttf") format(truetype),
+    url("/fonts/SmoochSans-Light.ttf") format(truetype);
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: var(--font-two);
+  color: var(--main-color);
 }

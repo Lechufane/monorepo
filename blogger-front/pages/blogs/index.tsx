@@ -1,12 +1,15 @@
 import { useEffect, useState } from "react";
 import BlogsService from "@/services/BlogsService";
 import logger from "@/utils/logger";
+import CardBlog from "@/components/CardBlog/CardBlog";
 
 interface Blog {
   id: number;
   title: string;
   content: string;
-  authorId: number;
+  authorName: string;
+  authorUsername: string;
+  authorEmail: string;
   createdAt: string;
   updatedAt: string;
 }
@@ -17,7 +20,9 @@ const Index: React.FC = () => {
       id: 0,
       title: "",
       content: "",
-      authorId: 0,
+      authorName: "",
+      authorUsername: "",
+      authorEmail: "",
       createdAt: "",
       updatedAt: "",
     },
@@ -38,18 +43,22 @@ const Index: React.FC = () => {
   }, []);
 
   return (
-    <div className="h-screen w-full py-8">
-      <h1 className="text-center font-semibold text-[2rem]">Blog</h1>
-      <div className="flex flex-col items-center">
-        {blogs.map(({ id, title, content }) => (
-          <div
-            key={id}
-            className="w-full h-[5rem] overflow-hidden m-2 text-ellipsis overflow-ellipsis"
-          >
-            <h2 className="text-base font-semibold">{title}</h2>
-            <p className="text-gray-500">{content}</p>
-          </div>
-        ))}
+    <div className="h-screen w-full px-4 py-8">
+      <h1 className="text-center font-semibold text-[2rem]">Tell your tale</h1>
+      <div className="flex flex-col items-center justify-center">
+        {blogs.map(
+          ({ id, title, content, authorUsername, authorEmail, authorName }) => (
+            <CardBlog
+              key={id}
+              id={id}
+              title={title}
+              content={content}
+              authorUsername={authorUsername}
+              authorEmail={authorEmail}
+              authorName={authorName}
+            />
+          )
+        )}
       </div>
     </div>
   );

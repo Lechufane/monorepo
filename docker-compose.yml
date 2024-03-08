@@ -55,11 +55,11 @@ services:
       - authors-api  # Wait until the authors-api container is ready before starting this container
       - blogs-api  # Wait until the blogs-api container is ready before starting this container
   frontend:
-    build: ./blogger-front/frontend # Build the Dockerfile in the specified directory
+    build: ./blogger-front # Build the Dockerfile in the specified directory
     restart: always  # Restart the container automatically unless manually stopped
     environment:
       - PORT=3000  # Set the PORT environment variable
-      - MIDDLEND=http://middlend:8080  # Set the MIDDLEND environment variable
+      - BASE_PATH=http://middlend:8080  # Set the MIDDLEND environment variable
     ports:
       - "3000:3000"  # Map the container port 3000 to host port 3000
     networks:

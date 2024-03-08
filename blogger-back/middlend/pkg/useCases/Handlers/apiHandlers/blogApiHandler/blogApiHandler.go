@@ -12,7 +12,6 @@ import (
 )
 
 func GetBlogsByAuthorId(authorId int) ([]apiBlog.Blog, response.Status) {
-
 	getUrl := os.Getenv("BLOGS_API") + constants.BLOG_API_ROUTES + "/blog/author/" + strconv.Itoa(authorId)
 
 	res, status := requestHelper.GetRequest(getUrl)
@@ -34,5 +33,28 @@ func GetBlogsByAuthorId(authorId int) ([]apiBlog.Blog, response.Status) {
 	}
 
 	return blogs, response.SuccessfulSearch
+}
 
+func GetAllBlogs() ([]apiBlog.Blog, response.Status) {
+	getUrl := os.Getenv("BLOGS_API") + constants.BLOG_API_ROUTES + "/blog"
+
+	res, status := requestHelper.GetRequest(getUrl)
+	if status != response.SuccessfulSearch {
+		return nil, response.BlogApiError
+	}
+
+	if res.StatusCode != http.StatusOK {
+		if res.StatusCode == http.StatusNotFound {
+			return nil, response.NotFound
+		}
+		return nil, response.InternalServerError
+	}
+
+	var blogs []apiBlog.Blog
+	status = responseHelper.ParseResponseStruct(&blogs, res)
+	if status != response.SuccessfulParse {
+		return nil, status
+	}
+
+	return blogs, response.SuccessfulSearch
 }

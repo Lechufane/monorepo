@@ -1,0 +1,15 @@
+.cardBlog {
+  display: flex;
+  flex-direction: column;
+}
+
+@media screen and (min-width: 768px) {
+  .cardBlog {
+    flex-direction: row;
+  }
+
+  .profileBox {
+    padding: 1rem;
+    margin: auto;
+  }
+}

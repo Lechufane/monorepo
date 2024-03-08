@@ -1,4 +1,5 @@
 import { API_BASE_URL, basePath, HTTP_STATUS } from "@/services/constants";
+import logger from "@/utils/logger";
 
 /**
  * Estandarized interface for requests.
@@ -20,6 +21,8 @@ const request = async (url, params = {}, defaultReturn = null) => {
       ...(params.headers || {}),
     };
     const isServerSide = typeof window === "undefined"; // True when server side rendering.
+
+    logger.debug(`Requesting ${url}...`);
 
     const res = await fetch(
       isServerSide

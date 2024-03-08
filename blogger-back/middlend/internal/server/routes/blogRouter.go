@@ -23,7 +23,11 @@ func (br *BlogRouter) GetBlogsByAuthorId(w http.ResponseWriter, r *http.Request)
 
 	authorBlogs, status := blogViewHandler.GetBlogsByAuthorId(authorId)
 	responseHelper.WriteResponse(w, status, authorBlogs)
+}
 
+func (br *BlogRouter) GetAllBlogs(w http.ResponseWriter, r *http.Request) {
+	blogs, status := blogViewHandler.GetAllBlogs()
+	responseHelper.WriteResponse(w, status, blogs)
 }
 
 func (br *BlogRouter) Routes() http.Handler {
@@ -44,6 +48,7 @@ func (br *BlogRouter) Routes() http.Handler {
 	}))
 
 	r.Get("/author/{authorId}", br.GetBlogsByAuthorId)
+	r.Get("/", br.GetAllBlogs)
 
 	return r
 }
