@@ -7,12 +7,13 @@ import (
 	"mod-middlend/pkg/useCases/Helpers/requestHelper"
 	"mod-middlend/pkg/useCases/Helpers/responseHelper"
 	"net/http"
+	"os"
 	"strconv"
 )
 
 func GetBlogsByAuthorId(authorId int) ([]apiBlog.Blog, response.Status) {
 
-	getUrl := "http://localhost" + constants.BLOG_LOCAL_API_URL + "/blog/author/" + strconv.Itoa(authorId)
+	getUrl := os.Getenv("BLOGS_API") + constants.BLOG_API_ROUTES + "/blog/author/" + strconv.Itoa(authorId)
 
 	res, status := requestHelper.GetRequest(getUrl)
 	if status != response.SuccessfulSearch {

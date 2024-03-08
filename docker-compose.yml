@@ -13,7 +13,7 @@ services:
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql # Execute the SQL commands when the container starts
     ports:
-      - "3306:3306"  # Map the container port 36 to host port 3306
+      - "3306:3306"  # Map the container port 3306 to host port 3306
     networks:
       - mynet  # Connect the container to the custom network
   authors-api:
@@ -21,11 +21,37 @@ services:
     restart: always  # Restart the container automatically unless manually stopped
     environment:
       - PORT=8082  # Set the PORT environment variable
-      - DB=root:root@(database:3306) # Sthis is a 
+      - DB=root:root@(database:3306)  # Set the DB environment variable
     ports: 
-      - "8082:8082"  # Map the container port 3000 to host port 3000
+      - "8082:8082"  # Map the container port 8082 to host port 8082
     networks:
       - mynet  # Connect the container to the custom network
     depends_on:
       - database  # Wait until the database container is ready before starting this container
-
+  blogs-api:
+    build: ./blogger-back/blogs-api # Build the Dockerfile in the specified directory
+    restart: always  # Restart the container automatically unless manually stopped
+    environment:
+      - PORT=8081  # Set the PORT environment variable
+      - DB=root:root@(database:3306) # Set the DB environment variable
+    ports: 
+      - "8081:8081"  # Map the container port 8081 to host port 8081
+    networks:
+      - mynet  # Connect the container to the custom network
+    depends_on:
+      - database  # Wait until the database container is ready before starting this container
+  middlend:
+    build: ./blogger-back/middlend # Build the Dockerfile in the specified directory
+    restart: always # Restart the container automatically unless manually stopped
+    environment:
+      - PORT=8080  # Set the PORT environment variable
+      - BLOGS_API=http://blogs-api:8081  # Set the BLOGS_API environment variable
+      - AUTHORS_API=http://authors-api:8082  # Set the AUTHORS_API environment variable
+    ports:
+      - "8080:8080"  # Map the container port 8080 to host port 8080
+    networks:
+      - mynet  # Connect the container to the custom network
+    depends_on:
+      - authors-api  # Wait until the authors-api container is ready before starting this container
+      - blogs-api  # Wait until the blogs-api container is ready before starting this container
+      

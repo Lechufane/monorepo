@@ -1,6 +1,7 @@
 package databaseHelpers
 
 import (
+	"os"
 	"time"
 
 	"gorm.io/driver/mysql"
@@ -11,7 +12,7 @@ import (
 var (
 	Db            *gorm.DB
 	parseTimeFlag = "?parseTime=true"
-	connectionUrl = "root:my-secret-pw@tcp(localhost:3307)" + "/blogger_blog" + parseTimeFlag
+	connectionUrl = os.Getenv("DB") + "/blogger_blog" + parseTimeFlag
 )
 
 func InitDB() *gorm.DB {
