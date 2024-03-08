@@ -3,6 +3,7 @@ package blogViewHandler
 import (
 	"mod-middlend/pkg/domain/innerDomain/response"
 	"mod-middlend/pkg/domain/outerDomain/blog"
+	"mod-middlend/pkg/domain/outerDomain/blogForm"
 	"mod-middlend/pkg/useCases/Handlers/apiHandlers/authorApiHandler"
 	"mod-middlend/pkg/useCases/Handlers/apiHandlers/blogApiHandler"
 )
@@ -59,4 +60,10 @@ func GetBlog(blogId int) (interface{}, response.Status) {
 	}
 
 	return BlogApiToBlogView(blog, author), response.SuccessfulSearch
+}
+
+func CreateBlog(blogForm blogForm.BlogForm) response.Status {
+	apiBlog := BlogViewToBlogApi(blogForm)
+	status := blogApiHandler.CreateBlog(apiBlog)
+	return status
 }

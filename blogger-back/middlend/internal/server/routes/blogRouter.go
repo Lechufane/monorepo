@@ -1,7 +1,9 @@
 package routes
 
 import (
+	"encoding/json"
 	"mod-middlend/pkg/domain/innerDomain/response"
+	"mod-middlend/pkg/domain/outerDomain/blogForm"
 	"mod-middlend/pkg/useCases/Handlers/viewHandlers/blogViewHandler"
 	"mod-middlend/pkg/useCases/Helpers/responseHelper"
 	"net/http"
@@ -39,7 +41,18 @@ func (br *BlogRouter) GetBlog(w http.ResponseWriter, r *http.Request) {
 
 	blog, status := blogViewHandler.GetBlog(blogId)
 	responseHelper.WriteResponse(w, status, blog)
+}
 
+func (br *BlogRouter) CreateBlog(w http.ResponseWriter, r *http.Request) {
+	var blogForm blogForm.BlogForm
+	err := json.NewDecoder(r.Body).Decode(&blogForm)
+	if err != nil {
+		responseHelper.WriteResponse(w, response.BadRequest, nil)
+		return
+	}
+
+	status := blogViewHandler.CreateBlog(blogForm)
+	responseHelper.WriteResponse(w, status, nil)
 }
 
 func (br *BlogRouter) Routes() http.Handler {
@@ -62,6 +75,8 @@ func (br *BlogRouter) Routes() http.Handler {
 	r.Get("/author/{authorId}", br.GetBlogsByAuthorId)
 	r.Get("/", br.GetAllBlogs)
 	r.Get("/{blogId}", br.GetBlog)
+
+	r.Post("/", br.CreateBlog)
 
 	return r
 }

@@ -1,8 +1,14 @@
-import cn from "@/utils/classNames";
 import { useRouter } from "next/router";
 import { useEffect, useState } from "react";
+import ProfileLogo from "@/components/ProfileLogo/ProfileLogo";
 import AuthorsService from "@/services/AuthorsService";
 import logger from "@/utils/logger";
+import cn from "@/utils/classNames";
+import dragonLogo from "@/public/assets/dragon-badge.svg";
+import styles from "@/styles/Authors.module.css";
+import Img from "@/components/Img";
+import CardBlog from "@/components/CardBlog/CardBlog";
+import HeaderBack from "@/components/HeaderBack/HeaderBack";
 
 interface Author {
   id: number;
@@ -50,39 +56,69 @@ const SingleAuthor: React.FC = () => {
     blogs: [],
   });
 
-  const randomColor = () => {
-    const colors = [
-      "bg-red-500",
-      "bg-blue-500",
-      "bg-green-500",
-      "bg-yellow-500",
-      "bg-pink-500",
-      "bg-purple-500",
-      "bg-indigo-500",
-      "bg-gray-500",
-    ];
-    return colors[Math.floor(Math.random() * colors.length)];
-  };
-
   return (
-    <div className="h-screen w-full px-4 py-8 min-w-[500px] justify-between">
-      <div
-        className={cn(
-          "flex flex-col gap-2 justify-center items-center mt-8 z-20 min-w-[250px]"
-        )}
-      >
-        <div
-          className={`${randomColor()} w-72 h-72 border-gray-200 border-2 rounded-full flex justify-center items-center`}
-        >
-          <p className="text-7xl font-semibold text-center">
-            {author.username
-              .split(" ")
-              .map((word) => word[0])
-              .join("")}
-          </p>
+    <div className="flex flex-col h-screen w-full px-4 py-8 min-w-[500px]">
+      <div className="sticky">
+        <HeaderBack />
+        <div className="w-full flex flex-col items-center justify-center">
+          <ProfileLogo title={author.username} size="large" className="" />
         </div>
-        <p className="w-fit">{author.name}</p>
-        <p className="text-sm ">{author.email}</p>
+        <div className="w-full">
+          <div className="flex justify-between w-full max-w-[850px] mx-auto gap-4 border-2 border-white">
+            <div className="flex flex-col items-start justify-center p-4  rounded-md">
+              <h2
+                className={cn(
+                  "text-3xl font-bold text-center mb-4",
+                  styles.title
+                )}
+              >
+                Adventure Badge
+              </h2>
+              <p className={cn("font-semibold", styles.text)}>
+                Name: {author.name}
+              </p>
+              <p className={cn("font-semibold", styles.text)}>
+                Email: {author.email}
+              </p>
+              <p className={cn("font-semibold", styles.text)}>
+                Adventures shared: {author.blogs.length}
+              </p>
+            </div>
+            <div>
+              <Img
+                src={dragonLogo}
+                alt="Dragon Badge"
+                width={200}
+                height={200}
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="flex flex-col items-center justify-center my-2 mx-auto">
+        {author.blogs.map(
+          ({
+            id,
+            title,
+            content,
+            authorUsername,
+            authorEmail,
+            authorName,
+            image,
+          }) => (
+            <CardBlog
+              key={id}
+              id={id}
+              title={title}
+              content={content}
+              authorUsername={authorUsername}
+              authorEmail={authorEmail}
+              authorName={authorName}
+              image={image}
+              hasProfile={false}
+            />
+          )
+        )}
       </div>
     </div>
   );

@@ -1,0 +1,26 @@
+.title {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 2.5rem /* 36px */;
+  line-height: 2.6rem /* 42px */;
+}
+
+.author {
+  font-size: 1.5rem /* 24px */;
+  line-height: 1.6rem /* 30px */;
+}
+
+.text {
+  font-family: "Montserrat", sans-serif;
+}
+
+@media (min-width: 600px) {
+  .title {
+    font-size: 5rem /* 48px */;
+    line-height: 5.5rem /* 56px */;
+  }
+
+  .author {
+    font-size: 2rem /* 32px */;
+    line-height: 2.1rem /* 34px */;
+  }
+}

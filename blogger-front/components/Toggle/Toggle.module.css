@@ -1,0 +1,50 @@
+.container {
+  display: flex;
+  flex-flow: row nowrap;
+  align-items: center;
+  font: 400 1.1rem / 1.5 var(--font-family);
+  color: var(--disabled-font-color);
+  margin: 0.5rem 0;
+}
+
+.container.active {
+  font-weight: 700;
+  color: var(--font-color);
+}
+
+.toggle {
+  --size: 1.2rem;
+  height: calc(var(--size) + 0.4rem);
+  width: calc(2 * var(--size) + 0.4rem);
+  padding: 0.2rem;
+  margin-right: 0.3rem;
+  border-radius: 2rem;
+  transition: background-color 0.2s;
+}
+
+.active .toggle {
+  background-color: var(--secondary-color);
+}
+
+.disabled .toggle,
+.inactive .toggle {
+  background-color: var(--disabled-font-color);
+}
+
+.circle {
+  width: var(--size);
+  height: var(--size);
+  background-color: var(--white);
+  border-radius: 50%;
+  position: relative;
+  left: 0;
+  transition: left 0.2s;
+}
+
+.active .circle {
+  left: 50%;
+}
+
+.disabled .circle {
+  background-color: #c3c3c3;
+}

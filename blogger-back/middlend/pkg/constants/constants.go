@@ -3,11 +3,13 @@ package constants
 import "os"
 
 var (
-	BLOGS_API  = os.Getenv("BLOG_API_URL")
-	AUTHOR_API = os.Getenv("AUTHOR_API_URL")
+	BLOGS_API  = os.Getenv("BLOGS_API")
+	AUTHOR_API = os.Getenv("AUTHORS_API")
 )
 
 const (
+	LOCAL_BLOGS_API  = "http://localhost:8001"
+	LOCAL_AUTHOR_API = "http://localhost:8002"
 
 	//mod-apis
 	BLOG_API_ROUTES   = "/api/blogger-blogs"

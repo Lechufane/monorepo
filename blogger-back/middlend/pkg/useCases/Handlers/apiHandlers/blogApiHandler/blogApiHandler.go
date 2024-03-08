@@ -1,6 +1,7 @@
 package blogApiHandler
 
 import (
+	"fmt"
 	"mod-middlend/pkg/constants"
 	apiBlog "mod-middlend/pkg/domain/innerDomain/apiblog"
 	"mod-middlend/pkg/domain/innerDomain/response"
@@ -81,4 +82,24 @@ func GetBlog(blogId int) (apiBlog.Blog, response.Status) {
 	}
 
 	return blog, response.SuccessfulSearch
+}
+
+func CreateBlog(blog apiBlog.BlogForm) response.Status {
+
+	postUrl := constants.BLOGS_API + constants.BLOG_API_ROUTES + "/blog"
+	fmt.Println(postUrl)
+
+	res, status := requestHelper.PostRequest(postUrl, blog)
+	if status != response.SuccessfulCreation {
+		return response.BlogApiError
+	}
+
+	if res.StatusCode != http.StatusCreated {
+		if res.StatusCode == http.StatusNotFound {
+			return response.NotFound
+		}
+		return response.InternalServerError
+	}
+
+	return response.SuccessfulCreation
 }

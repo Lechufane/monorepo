@@ -1,11 +1,13 @@
 import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 import Title from "@/components/Title/Title";
+import ProfileLogo from "@/components/ProfileLogo/ProfileLogo";
 import BlogsService from "@/services/BlogsService";
 import cn from "@/utils/classNames";
 import logger from "@/utils/logger";
-import styles from "@/styles/Blogs.module.css";
-import Img from "@/components/Img/Img";
+import Img from "@/components/Img";
+import styles from "@/styles/Authors.module.css";
+import HeaderBack from "@/components/HeaderBack/HeaderBack";
 
 interface Blog {
   id: number;
@@ -14,6 +16,7 @@ interface Blog {
   authorName: string;
   authorUsername: string;
   authorEmail: string;
+  authorId: number;
   image: string;
   createdAt: string;
   updatedAt: string;
@@ -30,6 +33,7 @@ const SingleBlog = () => {
     authorName: "",
     authorUsername: "",
     authorEmail: "",
+    authorId: 0,
     image: "",
     createdAt: "",
     updatedAt: "",
@@ -51,11 +55,12 @@ const SingleBlog = () => {
 
   return (
     <div className="h-screen w-full px-4 py-8 min-w-[500px] justify-between">
-      <div className="w-full h-40 flex flex-col items-center justify-center ">
+      <HeaderBack text="Go back" />
+      <div className="w-full h-40 flex flex-col items-center justify-center">
         <Title
           title={blog.title}
           className={cn(
-            "bg-red-600 whitespace-nowrap max-w-auto",
+            "bg-red-600 whitespace-nowrap max-w-auto text-[#ff9f1c]",
             styles.title
           )}
           topLeft
@@ -71,10 +76,14 @@ const SingleBlog = () => {
       <div className="w-full p-6">
         <p className={cn(styles.text)}>{blog.content}</p>
       </div>
-      <div className="w-full flex flex-col">
-        <Title
-          title={`By ${blog.authorName}`}
-          className={cn("bg-red-600 self-end", styles.author)}
+      <div
+        className="w-full flex flex-col cursor-pointer"
+        onClick={() => router.push(`/authors/${blog.authorId}`)}
+      >
+        <ProfileLogo
+          title={blog.authorUsername}
+          size="medium"
+          className="self-end"
         />
       </div>
     </div>

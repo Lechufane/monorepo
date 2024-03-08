@@ -5,6 +5,7 @@ type Blog struct {
 	AuthorName     string `json:"authorName"`
 	AuthorUsername string `json:"authorUsername"`
 	AuthorEmail    string `json:"authorEmail"`
+	AuthorId       int    `json:"authorId"`
 	Image          string `json:"image"`
 	Title          string `json:"title"`
 	Content        string `json:"content"`

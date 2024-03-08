@@ -1,0 +1,57 @@
+.input {
+  background-color: transparent;
+  border-radius: 0.625rem;
+  border: 2px solid var(--input-color);
+  height: 2.5rem;
+  margin-bottom: 0.3rem;
+  font-weight: 400;
+  color: var(--input-color);
+  padding: 0.3rem 0.5rem;
+  cursor: pointer;
+}
+
+.input:focus {
+  outline: 1px solid var(--main-color);
+}
+
+.input::placeholder {
+  padding: 0.3rem 0.1rem;
+}
+
+.disabled {
+  cursor: not-allowed;
+}
+
+.disabled > * {
+  opacity: 0.5;
+}
+
+.datePicker {
+  width: 100%;
+  height: 100%;
+  background-color: transparent;
+}
+
+.datePicker:focus {
+  outline: none;
+}
+
+.small {
+  width: 40%;
+}
+
+.medium {
+  width: 70%;
+}
+
+.large {
+  width: 100%;
+}
+
+.error {
+  display: block;
+  color: red;
+  font-size: 0.7rem;
+  line-height: 1rem;
+  margin-bottom: 0.3rem;
+}

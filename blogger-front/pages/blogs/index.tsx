@@ -1,9 +1,13 @@
 import { useEffect, useState } from "react";
+import { useRouter } from "next/router";
 import CardBlog from "@/components/CardBlog/CardBlog";
 import Title from "@/components/Title/Title";
+import Img from "@/components/Img";
 import BlogsService from "@/services/BlogsService";
 import logger from "@/utils/logger";
+import randomColor from "@/utils/randomColor";
 import cn from "@/utils/classNames";
+import addBlog from "@/public/assets/add-blog.svg";
 import styles from "@/styles/Blogs.module.css";
 
 interface Blog {
@@ -19,6 +23,8 @@ interface Blog {
 }
 
 const Index: React.FC = () => {
+  const router = useRouter();
+
   const [blogs, setBlogs] = useState<Blog[]>([
     {
       id: 0,
@@ -52,11 +58,11 @@ const Index: React.FC = () => {
       <div className="w-full p-8 h-40 flex items-center justify-center">
         <Title
           title="Find adventures"
-          className={cn("bg-red-600", styles.title)}
+          className={cn("bg-red-600 whitespace-nowrap ", styles.title)}
           topLeft
         />
       </div>
-      <div className="flex flex-col items-center justify-center my-2">
+      <div className="flex flex-col items-center justify-center my-2 mx-auto">
         {blogs.map(
           ({
             id,
@@ -80,6 +86,18 @@ const Index: React.FC = () => {
             />
           )
         )}
+      </div>
+      <div
+        onClick={() => {
+          router.push("/blogs/create");
+        }}
+        className={cn(
+          "h-24 w-24 m-2 fixed top-0 right-0 rounded-full cursor-pointer z-30",
+          randomColor(),
+          styles.addBlogButton
+        )}
+      >
+        <Img src={addBlog} alt="add blog" width={100} height={100} />
       </div>
     </div>
   );

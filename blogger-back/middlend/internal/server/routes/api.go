@@ -17,10 +17,11 @@ func New() http.Handler {
 
 	// hr := HotelRouter{}
 	br := BlogRouter{}
+	ar := AuthorRouter{}
 
 	// r.Mount("/hotel", hr.Routes())
 	r.Mount("/blog", br.Routes())
-	r.Mount("/author", br.Routes())
+	r.Mount("/author", ar.Routes())
 
 	return r
 }

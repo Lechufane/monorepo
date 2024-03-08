@@ -3,6 +3,7 @@ package main
 import (
 	"blogger-blog-api/internal/server"
 	"log"
+	"os"
 )
 
 // @title Template
@@ -11,8 +12,8 @@ import (
 
 func main() {
 	// When using local development uncomment this line of code with your own port
-	port := "8081"
-	// port := os.Getenv("PORT")
+	// port := "8001"
+	port := os.Getenv("PORT")
 
 	serv, err := server.New(port)
 	if err != nil {

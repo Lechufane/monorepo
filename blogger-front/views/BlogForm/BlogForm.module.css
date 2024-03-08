@@ -1,0 +1,25 @@
+.desktopSubmitButton {
+  display: none;
+}
+
+.mobileSubmitButton {
+  position: fixed;
+  bottom: 2rem;
+  margin: 0 auto;
+  left: 0;
+  right: 0;
+}
+
+@media screen and (min-width: 728px) {
+  .form {
+    padding-bottom: 1rem;
+  }
+
+  .desktopSubmitButton {
+    display: block;
+  }
+
+  .mobileSubmitButton {
+    display: none;
+  }
+}
