@@ -58,3 +58,27 @@ func GetAllBlogs() ([]apiBlog.Blog, response.Status) {
 
 	return blogs, response.SuccessfulSearch
 }
+
+func GetBlog(blogId int) (apiBlog.Blog, response.Status) {
+	getUrl := os.Getenv("BLOGS_API") + constants.BLOG_API_ROUTES + "/blog/" + strconv.Itoa(blogId)
+
+	res, status := requestHelper.GetRequest(getUrl)
+	if status != response.SuccessfulSearch {
+		return apiBlog.Blog{}, response.BlogApiError
+	}
+
+	if res.StatusCode != http.StatusOK {
+		if res.StatusCode == http.StatusNotFound {
+			return apiBlog.Blog{}, response.NotFound
+		}
+		return apiBlog.Blog{}, response.InternalServerError
+	}
+
+	var blog apiBlog.Blog
+	status = responseHelper.ParseResponseStruct(&blog, res)
+	if status != response.SuccessfulParse {
+		return apiBlog.Blog{}, status
+	}
+
+	return blog, response.SuccessfulSearch
+}

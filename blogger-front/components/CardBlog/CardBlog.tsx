@@ -1,5 +1,8 @@
-import cn from "@/utils/classNames";
+import { useRouter } from "next/router";
+import Img from "@/components//Img";
+import Title from "@/components/Title";
 import styles from "./CardBlog.module.css";
+import cn from "@/utils/classNames";
 
 interface Props {
   id: number;
@@ -7,7 +10,9 @@ interface Props {
   authorUsername: string;
   authorEmail: string;
   authorName: string;
+  image: string;
   content: string;
+  hasProfile: boolean;
 }
 
 const CardBlog: React.FC<Props> = ({
@@ -16,8 +21,12 @@ const CardBlog: React.FC<Props> = ({
   authorUsername,
   authorName,
   authorEmail,
+  image,
   content,
+  hasProfile,
 }: Props) => {
+  const router = useRouter();
+
   const randomColor = () => {
     const colors = [
       "bg-red-500",
@@ -36,40 +45,58 @@ const CardBlog: React.FC<Props> = ({
     <div
       key={id}
       className={cn(
-        "w-full flex itemss-center border-white border-2 m-2 rounded-md",
+        "w-full flex items-center border-transparent border-2 m-2 rounded-md relative cursor-pointer",
         styles.cardBlog
       )}
+      onClick={() => {
+        router.push(`/blogs/${id}`);
+      }}
     >
-      <div
-        className={cn(
-          "flex flex-col gap-2 justify-center items-center mt-8",
-          styles.profileBox
-        )}
-      >
+      <Img
+        src={image}
+        alt="blog"
+        width={400}
+        height={300}
+        className="absolute w-full h-full z-10 object-cover rounded-md"
+      />
+      {hasProfile && (
         <div
-          className={`${randomColor()} w-32 h-32 border-gray-200 border-2 rounded-full flex justify-center items-center`}
+          className={cn(
+            "flex flex-col gap-2 justify-center items-center mt-8 z-20 min-w-[250px]",
+            styles.profileBox
+          )}
         >
-          <p className="text-7xl font-semibold text-center">
-            {authorUsername
-              .split(" ")
-              .map((word) => word[0])
-              .join("")}
-          </p>
+          <div
+            className={`${randomColor()} w-32 h-32 border-gray-200 border-2 rounded-full flex justify-center items-center`}
+          >
+            <p className="text-7xl font-semibold text-center">
+              {authorUsername
+                .split(" ")
+                .map((word) => word[0])
+                .join("")}
+            </p>
+          </div>
+          <p className="w-fit">{authorName}</p>
+          <p className="text-sm ">{authorEmail}</p>
         </div>
-        <p>{authorName}</p>
-        <p>{authorEmail}</p>
-      </div>
+      )}
 
-      <div className="w-full overflow-hidden m-2 p-4 flex-2">
+      <div className="flex-coll justify-between w-full overflow-hidden m-2 p-4 z-20">
         <div className="flex justify-between w-full items-center gap-2">
-          <h2 className="text-normal font-semibold whitespace-nowrap overflow-hidden">
-            {title}
-          </h2>
-          <p className="text-sm font-semibold text-gray-500 whitespace-nowrap">
-            ...by {authorUsername}
-          </p>
+          <Title title={title} className={cn("bg-red-500", styles.title)} />
         </div>
-        <p className="text-gray-500 text-sm max-h-32 h-[60px]">{content}</p>
+        <div className="flex flex-col w-full justify-around items-end gap-2">
+          <p className={cn("text-white text-sm p-8", styles.contentText)}>
+            {content}
+          </p>
+          {hasProfile && (
+            <Title
+              title={`...by ${authorUsername}`}
+              className={cn("bg-red-500", styles.title)}
+              topLeft
+            />
+          )}
+        </div>
       </div>
     </div>
   );

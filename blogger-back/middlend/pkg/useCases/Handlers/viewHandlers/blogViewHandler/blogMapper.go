@@ -15,6 +15,8 @@ func BlogApiToBlogView(blogApi apiBlog.Blog, authorApi apiAuthor.Author) blog.Bl
 		AuthorName:     authorApi.Name,
 		AuthorUsername: authorApi.Username,
 		AuthorEmail:    authorApi.Email,
+		CreatedAt:      blogApi.CreatedAt,
+		Image:          blogApi.Image,
 	}
 
 	return blogResponse

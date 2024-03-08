@@ -30,6 +30,18 @@ func (br *BlogRouter) GetAllBlogs(w http.ResponseWriter, r *http.Request) {
 	responseHelper.WriteResponse(w, status, blogs)
 }
 
+func (br *BlogRouter) GetBlog(w http.ResponseWriter, r *http.Request) {
+	blogId, err := strconv.Atoi(chi.URLParam(r, "blogId"))
+	if err != nil {
+		responseHelper.WriteResponse(w, response.BadRequest, nil)
+		return
+	}
+
+	blog, status := blogViewHandler.GetBlog(blogId)
+	responseHelper.WriteResponse(w, status, blog)
+
+}
+
 func (br *BlogRouter) Routes() http.Handler {
 
 	r := chi.NewRouter()
@@ -49,6 +61,7 @@ func (br *BlogRouter) Routes() http.Handler {
 
 	r.Get("/author/{authorId}", br.GetBlogsByAuthorId)
 	r.Get("/", br.GetAllBlogs)
+	r.Get("/{blogId}", br.GetBlog)
 
 	return r
 }

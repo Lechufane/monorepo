@@ -20,6 +20,7 @@ func New() http.Handler {
 
 	// r.Mount("/hotel", hr.Routes())
 	r.Mount("/blog", br.Routes())
+	r.Mount("/author", br.Routes())
 
 	return r
 }

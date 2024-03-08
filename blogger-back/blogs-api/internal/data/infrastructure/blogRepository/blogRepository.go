@@ -37,8 +37,9 @@ func (br *BlogRepository) GetAllBlog() ([]blog.Blog, response.Status) {
 	var blogs []blog.Blog
 
 	db := databaseHelpers.Db
-	result := db.Find(&blogs)
 
+	//find all blogs ordered by the most recently created
+	result := db.Order("created_at desc").Find(&blogs)
 	if err := result.Error; err != nil {
 		if result.Error.Error() == gorm.ErrRecordNotFound.Error() {
 			return blogs, response.BlogNotFound

@@ -46,3 +46,17 @@ func GetAllBlogs() (interface{}, response.Status) {
 
 	return blogsArray, response.SuccessfulSearch
 }
+
+func GetBlog(blogId int) (interface{}, response.Status) {
+	blog, status := blogApiHandler.GetBlog(blogId)
+	if status != response.SuccessfulSearch {
+		return nil, status
+	}
+
+	author, status := authorApiHandler.GetAuthorById(blog.AuthorId)
+	if status != response.SuccessfulSearch {
+		return nil, status
+	}
+
+	return BlogApiToBlogView(blog, author), response.SuccessfulSearch
+}

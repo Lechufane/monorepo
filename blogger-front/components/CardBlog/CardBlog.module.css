@@ -3,6 +3,39 @@
   flex-direction: column;
 }
 
+.title {
+  font-family: "Bebas Neue", sans-serif;
+  color: #ff9f1c;
+}
+.contentText {
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.4
+  ); /* Adjust opacity (0 for transparent, 1 for solid) */
+  padding: 5px; /* Adjust padding as needed */
+  height: 140px;
+  overflow: hidden;
+  padding: 1rem;
+}
+
+/* Make an animation so when I hover over the cardBlog it shows a little reflex like a stell reflex */
+.cardBlog:hover {
+  transform: scale(1.01);
+  transition: transform 0.5s;
+  animation: shine 1s infinite;
+}
+
+@keyframes shine {
+  0% {
+    background-position: 0% 50%;
+  }
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
 @media screen and (min-width: 768px) {
   .cardBlog {
     flex-direction: row;

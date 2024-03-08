@@ -12,6 +12,7 @@ services:
       MYSQL_DATABASE: blogger_author  # Create a database named blogger_author
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql # Execute the SQL commands when the container starts
+      - dbdata:/var/lib/mysql  # Store the MySQL data on the named volume
     ports:
       - "3306:3306"  # Map the container port 3306 to host port 3306
     networks:

@@ -1,8 +1,9 @@
 import request from ".";
 
 const BlogsService = {
-  getBlogsByAuthorId: async (authorId) => {
-    return await request(`/blog/author/${authorId}`);
-  },
+  getBlogs: async () => await request("/blog"),
+  getBlogsByAuthorId: async (authorId) =>
+    await request(`/blog/author/${authorId}`),
+  getBlog: async (id) => await request(`/blog/${id}`),
 };
 export default BlogsService;
