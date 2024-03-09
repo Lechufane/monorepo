@@ -95,7 +95,7 @@ const SingleAuthor: React.FC = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col items-center justify-center my-2 mx-auto">
+      <div className="flex flex-col items-center justify-center my-2 mx-auto max-w-[920px]">
         {author.blogs.map(
           ({
             id,
