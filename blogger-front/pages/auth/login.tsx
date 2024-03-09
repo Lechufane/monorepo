@@ -20,7 +20,7 @@ const login: React.FC = () => {
     setLoginInput(newLoginInput);
   };
 
-  const handleLogin = async (e) => {
+  const handleLogin = async (e: any): Promise<void> => {
     e.preventDefault();
     setLoading(true);
     // const { ok, data } = await sendOtp(loginInput);// TODO: implement mail validation
@@ -73,11 +73,14 @@ const login: React.FC = () => {
         <Button
           disabled={loginInput["email"].length === 0}
           className="mt-7 mb-5"
-          label={"Continuar"}
           loading={loading}
-          handleClick={handleLogin}
-          size={"large"}
-        />
+          handleClick={handleLogin as () => Promise<void>} // Update the type of handleClick prop
+          size={"large" as any}
+          label={undefined}
+          bodyType={"slim"}
+        >
+          Continuar
+        </Button>
       </form>
     </div>
   );
