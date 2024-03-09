@@ -14,6 +14,7 @@ This folder contains a Next.js project that serves as the user interface for the
 ### Prerequisites:
 
 - Docker and Docker Compose (refer to https://docs.docker.com/get-docker for installation instructions) **this should be the only thing you need to install** to run the project.
+- **It's also important to have the docker daemon running** you can do this in linux by running `sudo systemctl start docker` and in windows by running the docker desktop app.
 - Go 1.x (refer to https://go.dev/doc/install for installation instructions)
 - Node.js and npm (refer to https://nodejs.org/en for installation instructions)
 - Clone the repository:

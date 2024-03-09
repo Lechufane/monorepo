@@ -87,16 +87,15 @@ func (ar *AuthorRouter) Routes() http.Handler {
 		MaxAge:             300,
 	}))
 
-	r.Get("/{authorId}", ar.GetAuthorById)
 	r.Get("/", ar.GetAllAuthor)
+	r.Get("/{authorId}", ar.GetAuthorById)
+	r.Get("/email/{email}", ar.GetAuthorByEmail)
 
 	r.Post("/", ar.CreateAuthor)
 
 	r.Put("/", ar.UpdateAuthor)
 
 	r.Delete("/{authorId}", ar.DeleteAuthorById)
-
-	r.Get("/email/{email}", ar.GetAuthorByEmail)
 
 	return r
 }
