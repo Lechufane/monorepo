@@ -46,6 +46,7 @@ const SingleAuthor: React.FC = () => {
 
   useEffect(() => {
     fetchAuthor();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   const [author, setAuthor] = useState<Author>({
