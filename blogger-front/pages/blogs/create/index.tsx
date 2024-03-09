@@ -1,5 +1,4 @@
 import { useRouter } from "next/router";
-import { toast } from "react-toastify";
 import BlogForm from "@/views/BlogForm";
 import BlogsService from "@/services/BlogsService";
 import HeaderBack from "@/components/HeaderBack";

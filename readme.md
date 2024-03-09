@@ -36,6 +36,10 @@ The docker-compose.yml file (if present) might define how dependencies are insta
 Migrations
 The initdb.sql file contains the initial database schema for your projects. To apply the migrations, just run the docker-compose command and it should run the automatically.
 
+## Improvements
+
+    -   I'm currently working in a login and register system for the backend.
+
 ## License
 
 This project is licensed under the [License Name] license. See the LICENSE file for details.

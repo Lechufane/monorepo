@@ -6,6 +6,8 @@ import Input from "@/components/Input";
 import Title from "@/components/Title";
 import cn from "@/utils/classNames";
 import Link from "next/link";
+import AuthServices from "@/services/AuthServices";
+import logger from "@/utils/logger";
 
 const login: React.FC = () => {
   const [loginInput, setLoginInput] = useState({ email: "" });
@@ -23,12 +25,14 @@ const login: React.FC = () => {
   const handleLogin = async (e: any): Promise<void> => {
     e.preventDefault();
     setLoading(true);
-    // const { ok, data } = await sendOtp(loginInput);// TODO: implement mail validation
+    logger.debug("Logging in with email", loginInput.email);
+    const { ok, data } = await AuthServices.Login(loginInput.email);
     setLoading(false);
-    // if (!ok) {
-    //   setErrorMessage(data ?? "Lo sentimos, ha ocurrido un error");
-    //   return;
-    // }
+    if (!ok) {
+      router.push(`/auth/register`);
+      return;
+    }
+    localStorage.setItem("token", data);
     router.push(`/blogs`);
   };
 

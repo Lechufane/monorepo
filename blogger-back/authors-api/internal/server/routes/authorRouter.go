@@ -66,7 +66,7 @@ func (ar *AuthorRouter) DeleteAuthorById(w http.ResponseWriter, r *http.Request)
 }
 
 func (ar *AuthorRouter) GetAuthorByEmail(w http.ResponseWriter, r *http.Request) {
-	email := chi.URLParam(r, "email")
+	email := r.URL.Query().Get("email")
 	author, status := ar.Handler.GetAuthorByEmail(email)
 	responseHelper.WriteResponse(w, status, author)
 }
@@ -89,7 +89,7 @@ func (ar *AuthorRouter) Routes() http.Handler {
 
 	r.Get("/", ar.GetAllAuthor)
 	r.Get("/{authorId}", ar.GetAuthorById)
-	r.Get("/email/{email}", ar.GetAuthorByEmail)
+	r.Get("/email", ar.GetAuthorByEmail)
 
 	r.Post("/", ar.CreateAuthor)
 

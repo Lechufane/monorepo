@@ -38,7 +38,8 @@ func (br *AuthorRouter) Routes() http.Handler {
 	r := chi.NewRouter()
 
 	r.Get("/{authorId}", br.GetBlogsByAuthorId)
-	r.Get("/email", br.GetAuthorByEmail)
+
+	r.Get("/auth/check-email", br.GetAuthorByEmail)
 
 	return r
 }

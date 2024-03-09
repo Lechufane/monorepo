@@ -36,6 +36,10 @@ func GetAuthorById(authorId int) (apiAuthor.Author, response.Status) {
 }
 
 func GetAuthorByEmail(email string) (string, response.Status) {
+
+	// getUrl := constants.LOCAL_AUTHOR_API + constants.AUTHOR_API_ROUTES + "/author/email?email=" + email // This is for local testing. Comment this line of code when deploying.
+	// fmt.Println(getUrl)
+
 	getUrl := os.Getenv("AUTHORS_API") + constants.AUTHOR_API_ROUTES + "/author/email?email=" + email
 
 	res, status := requestHelper.GetRequest(getUrl)

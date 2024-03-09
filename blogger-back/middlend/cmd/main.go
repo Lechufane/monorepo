@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"mod-middlend/internal/server"
 	"os"
@@ -13,10 +12,9 @@ import (
 
 func main() {
 
-	// When using local development uncomment this line of code with your own port
+	// port := "8000" // This is for local testing. Comment this line of code when deploying.
+	// fmt.Println("Server running on port: ", port)
 	port := os.Getenv("PORT")
-	// port := "8000"
-	fmt.Println("Port: ", port)
 	serv, err := server.New(port)
 	if err != nil {
 		log.Fatal(err)

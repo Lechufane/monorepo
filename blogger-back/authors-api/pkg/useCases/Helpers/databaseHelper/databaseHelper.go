@@ -13,6 +13,7 @@ import (
 var (
 	Db            *gorm.DB
 	parseTimeFlag = "?parseTime=true"
+	// connectionUrl = "root:root@(localhost:3306)" + "/blogger_author" + parseTimeFlag // TODO: This is for local testing. Comment this line of code when deploying
 	connectionUrl = os.Getenv("DB") + "/blogger_author" + parseTimeFlag
 )
 
