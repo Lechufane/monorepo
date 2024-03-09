@@ -13,7 +13,7 @@ This folder contains a Next.js project that serves as the user interface for the
 
 ### Prerequisites:
 
-- Docker and Docker Compose (refer to https://docs.docker.com/get-docker for installation instructions) _this should be the only thing you need to install_ to run the project.
+- Docker and Docker Compose (refer to https://docs.docker.com/get-docker for installation instructions) **this should be the only thing you need to install** to run the project.
 - Go 1.x (refer to https://go.dev/doc/install for installation instructions)
 - Node.js and npm (refer to https://nodejs.org/en for installation instructions)
 - Clone the repository:
@@ -42,8 +42,10 @@ This project is licensed under the [License Name] license. See the LICENSE file 
 ## Additional Information
 
 Feel free to add any further details specific to your project, such as:
-Links to project documentation (if any).
-Troubleshooting tips.
-Testing instructions.
-Consider including a section on how the backend and frontend interact (if applicable).
-Contact information for developers www.diegovillafane.com.
+
+- Links to project documentation (if any).
+- Troubleshooting tips.
+- Testing instructions.
+- Consider including a section on how the backend and frontend interact (if applicable).
+
+### Contact information for developers www.diegovillafane.com.
