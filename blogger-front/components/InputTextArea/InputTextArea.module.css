@@ -5,14 +5,14 @@
 
 .input {
   position: relative;
-  background-color: transparent;
+  background-color: white;
   border-radius: 0.625rem;
   border: 2px solid var(--input-color);
   height: 7rem;
   width: 100%;
   padding: 0.3rem 0.5rem;
   font-weight: 400;
-  color: var(--font-color);
+  color: var(--background-color);
   display: block;
   resize: none;
 }
@@ -38,8 +38,8 @@
   line-height: 1;
   padding: 0 0.1rem;
   border-radius: 0.625rem;
-  color: var(--disabled-color);
-  background-color: var(--background-color);
+  color: var(--background-color);
+  background-color: var(--main-color);
 }
 
 .error {

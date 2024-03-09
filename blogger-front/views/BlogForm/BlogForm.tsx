@@ -1,28 +1,25 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
-import { toast } from "react-toastify";
-import useForm from "@/hooks/useForm";
-import HeaderBack from "@/components/HeaderBack";
 import Button from "@/components/Button";
-import ButtonAdd from "@/components/ButtonAdd";
-import Input from "@/components/Input";
-import InputFile from "@/components/InputFile";
-import InputTextArea from "@/components/InputTextArea";
 import { inputs, validator } from "@/services/constants/blogForm";
-import { experiences } from "@/services/constants/filterTags";
 import cn from "@/utils/classNames";
 import styles from "./BlogForm.module.css";
+import logger from "@/utils/logger";
+import useForm from "@/hooks/useForm";
+import { set } from "firebase/database";
+import { useRouter } from "next/router";
 
 const INITIAL_FORM = {
   title: "",
   description: "",
-  logoUrl: null,
+  image: null,
+  authorId: 1,
 };
 
 const INITIAL_ERRORS = {
   title: "",
   description: "",
-  logoUrl: "",
+  image: "",
 };
 
 interface Props {
@@ -31,69 +28,76 @@ interface Props {
   backHref?: string;
   modifyExperience?: boolean;
   initialForm?: object;
-  handleSuccessfulSubmit: (form: object) => void;
   submitService: (payload: object) => Promise<{ ok: boolean }>;
   submitLabel?: string;
 }
 
 const BlogForm: React.FC<Props> = ({
   className,
-  headerTitle,
-  backHref,
-  modifyExperience,
   initialForm = INITIAL_FORM,
   submitService,
   submitLabel,
 }: Props): JSX.Element => {
-  const { form, formBuilder, errors, setForm } = useForm(
-    initialForm,
+  const router = useRouter();
+
+  // ---------- HOOKS ---------- //
+  const { form, formBuilder, errors, setForm, handleChange }: any = useForm(
+    INITIAL_FORM,
     validator,
     INITIAL_ERRORS
   );
 
   const [loading, setLoading] = useState(false);
-  const [disabled, setDisabled] = useState(false); // This is for the submit button of the form
 
-  const handleSubmit = async (e) => {
+  // ---------- HANDLERS ---------- //
+
+  const handleSubmit = async (e: any) => {
     e.preventDefault();
     setLoading(true);
-    if (disabled) return;
 
     const payload = { ...form };
+    logger.debug("payload", payload);
     const { ok } = await submitService(payload);
-
     setLoading(false);
+    if (ok) {
+      router.push("/blogs");
+    }
   };
 
   // ---------- EFFECTS ---------- //
 
   useEffect(() => {
-    // If the initialForm prop changes, update the form state.
-    setForm((prevForm) => ({ ...prevForm, ...initialForm }));
-  }, [initialForm]);
-
-  useEffect(() => {
-    // Enable submit button if all required fields are filled and there are no errors.
-    if (
-      !Object.values(errors).some((value) => value) && // No errors
-      // All required fields are filled.
-      form.title &&
-      form.description &&
-      form.logoUrl
-    ) {
-      setDisabled(false);
-    } else {
-      setDisabled(true);
-    }
+    logger.debug("form", form);
   }, [form]);
 
+  useEffect(() => {
+    // If the initialForm prop changes, update the form state.
+    setForm((prevForm: any) => ({ ...prevForm, ...initialForm }));
+  }, [initialForm]);
+
   // ---------- CONSTANTS ---------- //
+
+  const handleDisabled = () => {
+    //check if input is empty
+    if (form.title === "" || (form.content === "" && form.image !== null)) {
+      return true;
+    }
+    //check if there are errors
+    if (errors.title !== "" || errors.content !== "" || errors.image !== "") {
+      return true;
+    }
+    //check if the form is loading
+    if (loading) {
+      return true;
+    }
+    return false;
+  };
 
   const SubmitButton = (props: any) => (
     <Button
       handleClick={handleSubmit}
       label={submitLabel}
-      disabled={disabled}
+      disabled={handleDisabled()}
       loading={loading}
       {...props}
     />
@@ -103,7 +107,10 @@ const BlogForm: React.FC<Props> = ({
     <>
       <form onSubmit={handleSubmit} className={cn(styles.form, className, "")}>
         {formBuilder(inputs)}
-        <SubmitButton size="medium" className={styles.mobileSubmitButton} />
+        <SubmitButton
+          size="medium"
+          className="font-semibold cursor-pointer mx-auto w-full"
+        />
       </form>
     </>
   );
@@ -115,7 +122,6 @@ BlogForm.propTypes = {
   backHref: PropTypes.string,
   modifyExperience: PropTypes.bool,
   initialForm: PropTypes.object,
-  handleSuccessfulSubmit: PropTypes.func.isRequired,
   submitService: PropTypes.func.isRequired,
   submitLabel: PropTypes.string,
 };

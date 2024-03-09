@@ -12,6 +12,11 @@
   font-family: "Roboto", sans-serif;
 }
 
+.addBlogButton {
+  width: 4rem;
+  height: 4rem;
+}
+
 @media (min-width: 600px) {
   .title {
     font-size: 5rem /* 48px */;
@@ -21,5 +26,10 @@
   .author {
     font-size: 2rem /* 32px */;
     line-height: 2.1rem /* 34px */;
+  }
+
+  .addBlogButton {
+    width: 6rem;
+    height: 6rem;
   }
 }

@@ -8,15 +8,6 @@ import cn from "@/utils/classNames";
 import imgDelete from "@/public/assets/trash-can.svg";
 import imgAssetFallback from "@/public/assets/admin-logo.svg";
 import styles from "./InputFile.module.css";
-import logger from "@/utils/logger";
-
-/**
- * Reusable Input File Image component. Requires setting a max. number of files accepted.
- * Automatically uploads files to Firebase and returns Firebase File URL.
- * @param {string} name - Files input name. Firebase images are stored using this name.
- * @param {function} handleFiles - Callback for files uploaded. Will be invoked with an array of Firebase URL each time an image is uploaded or deleted.
- * @param {string} label - optional label shown to upload images.
- */
 
 interface InputFileProps {
   name: string;
@@ -30,7 +21,8 @@ interface InputFileProps {
   fileName?: string;
   maxSize?: number;
   value?: string | string[];
-  handleChange: (value: string | string[]) => void;
+  handleChange: (value: string | string[] | null) => void;
+  handleFieldChange: (name: string) => (value: string) => void; // Add this prop
   required?: boolean;
 }
 
@@ -43,30 +35,27 @@ const InputFile = ({
   fallbackAssetsUrl,
   className,
   fileName,
-  maxSize,
+  maxSize = 1024 * 1024 * 10, // 10MB
   value,
   handleChange,
+  handleFieldChange, // Add this prop
   ...props
 }: InputFileProps) => {
-  const [loading, setLoading] = useState(false); // True while uploading to Firebase.
-  const [dragging, setDragging] = useState(false); // True while dragging file into uploading area.
+  const [loading, setLoading] = useState(false);
+  const [dragging, setDragging] = useState(false);
   const [imgValue, setImgValue] = useState(value);
 
-  /** Handles file dragging action into uploading area.
-   * Enables focus style for the dragging area. */
-  const handleDrag = (e) => {
+  const handleDrag = (e: any) => {
     e.stopPropagation();
     e.preventDefault();
     setDragging(true);
   };
 
-  /** Removes focus styles for the dragging area. */
   const handleDragExit = () => {
     setDragging(false);
   };
 
-  /** Processes files dropped in the uploading area. */
-  const handleDrop = (e) => {
+  const handleDrop = (e: any) => {
     e.stopPropagation();
     e.preventDefault();
     setDragging(false);
@@ -74,32 +63,34 @@ const InputFile = ({
     processFile(file);
   };
 
-  /** Processes files uploaded manually from the input area clicked. */
-  const handleUpload = (e) => processFile(e.target.files[0]);
+  const handleUpload = (e: any) => processFile(e.target.files[0]);
 
-  /** Validates file size and uploads file to Firebase.
-   * Returns generated Firebase file URL. */
-  const processFile = async (file) => {
-    if (file.size <= maxSize) {
+  const processFile = async (file: any) => {
+    setLoading(true);
+    if (file?.size <= maxSize) {
       const { ok, data } = await FirebaseServices.uploadFile(file, fileName);
       if (ok) {
         setImgValue(data);
+        handleChange({ target: { name, value: data } } as any); // Update form state here
+        setLoading(false);
         return data;
       } else {
         toast.error("Lo sentimos, ha ocurrido un error al subir el archivo.");
+        setLoading(false);
       }
     } else {
       toast.error(
         `El archivo debe pesar hasta ${Math.floor(maxSize / (1024 * 1024))}MB`
       );
+      setLoading(false);
     }
     return null;
   };
 
-  /** Removes file from file list. */
   const removeFile = (e: React.MouseEvent<HTMLButtonElement>): void => {
     e.preventDefault();
-    setImgValue(null);
+    setImgValue("");
+    handleChange(null); // Update form state here
   };
 
   return (
@@ -116,7 +107,7 @@ const InputFile = ({
             {placeholder}
           </span>
         )}
-        <label className="w-full h-full absolute left-0 top-0 cursor-pointer text-black">
+        <label className="absolute left-0 top-0 cursor-pointer text-black  object-contain h-full w-full">
           <input
             name={name}
             onInput={handleUpload}
@@ -127,7 +118,7 @@ const InputFile = ({
         </label>
 
         {imgValue && (
-          <div className={cn(styles.image, "w-screen")}>
+          <div className={cn(styles.image, "w-screen  ")}>
             <button
               className="h-8 w-8 p-2 top-0 right-0 absolute bg-main rounded-lg flex justify-center items-center cursor-pointer"
               onClick={removeFile}
@@ -136,12 +127,12 @@ const InputFile = ({
             </button>
             <div>
               <Img
-                fallback={fallbackAssetsUrl}
-                src={imgValue}
+                fallback={fallbackAssetsUrl as string}
+                src={imgValue as string}
                 alt="Archivo"
                 width={300}
                 height={300}
-                className="object-cover w-full h-full"
+                className="object-cover w-full h-full rounded-lg"
               />
             </div>
           </div>
@@ -156,9 +147,11 @@ InputFile.propTypes = {
   label: PropTypes.string,
   name: PropTypes.string.isRequired,
   handleChange: PropTypes.func.isRequired,
+  handleFieldChange: PropTypes.func.isRequired, // Add this prop
   maxSize: PropTypes.number,
   size: PropTypes.oneOf(["small", "medium", "large"]),
   fallbackAssetsUrl: PropTypes.oneOfType([PropTypes.string, PropTypes.object]),
+  placeholder: PropTypes.string,
 };
 
 InputFile.defaultProps = {

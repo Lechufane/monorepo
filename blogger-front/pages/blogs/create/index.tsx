@@ -12,7 +12,7 @@ const CreateBlog = () => {
 
   return (
     <>
-      <HeaderBack text="Go back" />
+      <HeaderBack text="Go back" className="m-4" />
       <div className="w-full p-8 flex items-center justify-center">
         <Title
           title="Share an adventure"
@@ -24,7 +24,7 @@ const CreateBlog = () => {
         <BlogForm
           headerTitle="Solicitud de nuevo Blog"
           backHref="/partner/blogs"
-          submitLabel="Solicitar Blog"
+          submitLabel="Send us your adventure!"
           submitService={BlogsService.createBlog}
         />
       </div>

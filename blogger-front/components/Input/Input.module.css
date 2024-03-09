@@ -1,6 +1,6 @@
 .container {
   position: relative;
-  margin-bottom: 0.3rem;
+  margin-bottom: 0.5rem;
 }
 
 .input {
@@ -8,19 +8,23 @@
   background-color: white;
   border-radius: 0.625rem;
   border: 2px solid var(--input-color);
-  height: 3rem;
   padding: 0.3rem 0.5rem;
   font-weight: 400;
   color: black;
-  display: block;
-  height: 2.5rem;
+  height: 4rem;
   width: 100%;
+  z-index: 20;
 }
+
 .input:focus {
   outline: 1px solid var(--main-color);
 }
 .input:disabled {
   color: var(--disabled-color);
+}
+
+.content {
+  height: 5rem;
 }
 
 .placeholder {

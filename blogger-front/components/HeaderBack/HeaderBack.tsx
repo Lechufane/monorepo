@@ -6,9 +6,10 @@ import cn from "@/utils/classNames";
 
 interface Props {
   text?: string;
+  className?: string;
 }
 
-const HeaderBack = ({ text }: Props) => {
+const HeaderBack = ({ text, className }: Props) => {
   const router = useRouter();
   const handleClick = () => {
     router.back();
@@ -18,7 +19,8 @@ const HeaderBack = ({ text }: Props) => {
     <div
       className={cn(
         "sticky top-5 z-50 cursor-pointer flex justify-start gap-3",
-        styles.text
+        styles.text,
+        className
       )}
       onClick={handleClick}
     >

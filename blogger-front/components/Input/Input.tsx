@@ -26,6 +26,7 @@ const Input = ({
   errorMessage,
   name,
   maxLength,
+  size,
   ...props
 }: Props) => {
   return (
@@ -35,8 +36,8 @@ const Input = ({
         {type === "textarea" ? (
           <textarea
             name={name}
-            className={cn(styles.input, styles[type], className)}
-            onChange={handleChange}
+            className={cn(styles.input, className)}
+            onChange={(e: any) => handleChange(e)}
             maxLength={maxLength}
             value={value}
             {...props}
@@ -44,8 +45,8 @@ const Input = ({
         ) : (
           <input
             name={name}
-            className={cn(styles.input, styles[type], className)}
-            onChange={handleChange}
+            className={cn(styles.input, className)}
+            onChange={(e) => handleChange(e)}
             maxLength={maxLength}
             value={value}
             {...props}

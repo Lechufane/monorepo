@@ -15,8 +15,8 @@
 }
 
 .buttonPrimary {
-  background-color: var(--main-color);
-  color: var(--background-color);
+  background-color: var(--secondary-color);
+  color: var(--main-color);
 }
 
 .buttonSecondary {

@@ -84,7 +84,6 @@ func PostRequest(url string, body interface{}) (*http.Response, response.Status)
 	// Create a HTTP post request
 	req, err := http.NewRequest(http.MethodPost, url, bytes.NewBuffer(parsedObject))
 	if err != nil {
-
 		return nil, response.InternalServerError
 	}
 	req.Header.Add("Content-Type", "application/json")

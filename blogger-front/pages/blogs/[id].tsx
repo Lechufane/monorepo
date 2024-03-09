@@ -54,39 +54,41 @@ const SingleBlog = () => {
   }, [id]);
 
   return (
-    <div className="h-screen w-full px-4 py-8 min-w-[500px] justify-between">
-      <HeaderBack text="Go back" />
-      <div className="w-full h-40 flex flex-col items-center justify-center">
-        <Title
-          title={blog.title}
-          className={cn(
-            "bg-red-600 whitespace-nowrap max-w-auto text-[#ff9f1c]",
-            styles.title
-          )}
-          topLeft
+    <>
+      <HeaderBack text="Go back" className="m-4" />
+      <div className="h-screen w-full px-4 py-8 min-w-[500px] justify-between max-w-[980px] mx-auto">
+        <div className="w-full h-40 flex flex-col items-center justify-center">
+          <Title
+            title={blog.title}
+            className={cn(
+              "bg-red-600 whitespace-nowrap max-w-auto text-[#ff9f1c]",
+              styles.title
+            )}
+            topLeft
+          />
+        </div>
+        <Img
+          src={blog.image}
+          alt="blog"
+          className="w-full h-96 object-cover rounded-md"
+          width={400}
+          height={300}
         />
+        <div className="w-full p-6">
+          <p className={cn(styles.text)}>{blog.content}</p>
+        </div>
+        <div
+          className="w-full flex flex-col cursor-pointer"
+          onClick={() => router.push(`/authors/${blog.authorId}`)}
+        >
+          <ProfileLogo
+            title={blog.authorUsername}
+            size="medium"
+            className="self-end"
+          />
+        </div>
       </div>
-      <Img
-        src={blog.image}
-        alt="blog"
-        className="w-full h-96 object-cover rounded-md"
-        width={400}
-        height={300}
-      />
-      <div className="w-full p-6">
-        <p className={cn(styles.text)}>{blog.content}</p>
-      </div>
-      <div
-        className="w-full flex flex-col cursor-pointer"
-        onClick={() => router.push(`/authors/${blog.authorId}`)}
-      >
-        <ProfileLogo
-          title={blog.authorUsername}
-          size="medium"
-          className="self-end"
-        />
-      </div>
-    </div>
+    </>
   );
 };
 

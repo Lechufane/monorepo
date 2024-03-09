@@ -41,7 +41,7 @@ const InputTextArea = ({
         />
         {maxLength && (
           <span className={styles.counter}>{`${
-            value.length || 0
+            value?.length || 0
           } / ${maxLength}`}</span>
         )}
       </div>

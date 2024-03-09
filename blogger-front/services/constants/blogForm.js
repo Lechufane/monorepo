@@ -9,7 +9,7 @@ export const inputs = [
   {
     id: 2,
     type: "textarea",
-    name: "description",
+    name: "content",
     placeholder: "Description",
     maxLength: 500,
   },
@@ -18,28 +18,28 @@ export const inputs = [
     type: "file",
     accept: "image/*",
     multiple: false,
-    name: "logoUrl",
+    name: "image",
     placeholder: "Blog image",
     size: "large",
     maxSize: 1000000,
     fileName: "blog",
     fallbackAssetsUrl: "https://firebasestorage.googleapis.com/v0/",
-    className: "relative w-1/2 h-1/2 bg-gray-200 rounded-lg",
   },
 ];
 
 export const validator = (field, value) => {
-  if (!value) return "Este campo es obligatorio";
+  if (!value) return "This field is required";
 
   // const parsedValue = parseInt(value);
   const properFormats = {
     //test if value has only letters, allow spaces and accents. It must be at least 7 characters long
     title:
       /^[a-zA-ZÀ-ÿ\s]{3,40}$/g.test(value) || //test if value has only letters, allow spaces and accents and it's not longer than 40 characters
-      "Este campo es inválido",
+      "You must write a title with at least 3 characters",
     content:
-      //test if value it's not longer than 200 characters
-      value.length < 250 || "Este campo es inválido",
+      //test if value it's longer than 250 characters and shorter than 1000
+      (value.length > 250 && value.length < 1000) ||
+      "You must write at least 250 characters",
     image: true,
   };
   if (properFormats[field] === true) return "";

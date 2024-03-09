@@ -62,7 +62,7 @@ const Index: React.FC = () => {
           topLeft
         />
       </div>
-      <div className="flex flex-col items-center justify-center my-2 mx-auto">
+      <div className="flex flex-col items-center justify-center my-2 mx-auto max-w-[980px]">
         {blogs.map(
           ({
             id,
@@ -92,7 +92,7 @@ const Index: React.FC = () => {
           router.push("/blogs/create");
         }}
         className={cn(
-          "h-24 w-24 m-2 fixed top-0 right-0 rounded-full cursor-pointer z-30",
+          "m-2 fixed top-0 right-0 rounded-full cursor-pointer z-30",
           randomColor(),
           styles.addBlogButton
         )}

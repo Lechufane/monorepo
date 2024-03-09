@@ -86,8 +86,10 @@ func GetBlog(blogId int) (apiBlog.Blog, response.Status) {
 
 func CreateBlog(blog apiBlog.BlogForm) response.Status {
 
-	postUrl := constants.BLOGS_API + constants.BLOG_API_ROUTES + "/blog"
-	fmt.Println(postUrl)
+	postUrl := os.Getenv("BLOGS_API") + constants.BLOG_API_ROUTES + "/blog"
+
+	// Write to standard output for logging in Docker
+	fmt.Fprintf(os.Stdout, "POST request URL: %s\n", postUrl)
 
 	res, status := requestHelper.PostRequest(postUrl, blog)
 	if status != response.SuccessfulCreation {
