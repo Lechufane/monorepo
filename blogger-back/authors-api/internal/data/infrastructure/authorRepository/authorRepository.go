@@ -17,6 +17,7 @@ type Repository interface {
 	GetAuthorById(authorId int) (author.Author, response.Status)
 	UpdateAuthor(author author.Author) response.Status
 	DeleteAuthorById(authorId int) response.Status
+	GetAuthorByEmail(email string) (author.Author, response.Status)
 }
 
 func (ar *AuthorRepository) CreateAuthor(author *author.Author) (*author.Author, response.Status) {
@@ -85,4 +86,19 @@ func (ar *AuthorRepository) DeleteAuthorById(authorId int) response.Status {
 		return response.DBExecutionError
 	}
 	return response.SuccessfulDeletion
+}
+
+func (ar *AuthorRepository) GetAuthorByEmail(email string) (author.Author, response.Status) {
+	var author author.Author
+	db := databaseHelpers.Db
+	result := db.Where("email = ?", email).First(&author)
+
+	if err := result.Error; err != nil {
+		if result.Error.Error() == gorm.ErrRecordNotFound.Error() {
+			return author, response.AuthorNotFound
+		}
+		return author, response.DBExecutionError
+	}
+
+	return author, response.AuthorFound
 }

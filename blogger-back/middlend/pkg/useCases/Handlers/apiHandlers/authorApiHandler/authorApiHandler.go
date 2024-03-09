@@ -34,3 +34,21 @@ func GetAuthorById(authorId int) (apiAuthor.Author, response.Status) {
 
 	return author, response.SuccessfulSearch
 }
+
+func GetAuthorByEmail(email string) (string, response.Status) {
+	getUrl := os.Getenv("AUTHORS_API") + constants.AUTHOR_API_ROUTES + "/author/email?email=" + email
+
+	res, status := requestHelper.GetRequest(getUrl)
+	if status != response.SuccessfulSearch {
+		return "", response.AuthorApiError
+	}
+
+	if res.StatusCode != http.StatusOK {
+		if res.StatusCode == http.StatusNotFound {
+			return "", response.NotFound
+		}
+		return "", response.InternalServerError
+	}
+
+	return email, response.SuccessfulSearch
+}

@@ -16,6 +16,7 @@ type Handler interface {
 	GetAllAuthor() (interface{}, response.Status)
 	UpdateAuthor(author author.Author) response.Status
 	DeleteAuthorById(authorId int) response.Status
+	GetAuthorByEmail(email string) (interface{}, response.Status)
 }
 
 func (ah *AuthorHandler) CreateAuthor(author author.Author) (interface{}, response.Status) {
@@ -36,4 +37,8 @@ func (ah *AuthorHandler) UpdateAuthor(author author.Author) response.Status {
 
 func (ah *AuthorHandler) DeleteAuthorById(authorId int) response.Status {
 	return ah.Repository.DeleteAuthorById(authorId)
+}
+
+func (ah *AuthorHandler) GetAuthorByEmail(email string) (interface{}, response.Status) {
+	return ah.Repository.GetAuthorByEmail(email)
 }
