@@ -26,20 +26,9 @@ Navigate to the root directory of the repository:
 
 ```
 cd [monorepo]
-Usa el código con precaución.
-(Optional, if not using Docker Compose): Install dependencies for the backend Go projects:
-Bash
-cd blogger-back/apis
-go mod download
-cd ../middlend
-go mod download
-Usa el código con precaución.
-(Optional, if not using Docker Compose): Install dependencies for the frontend Next.js project:
-Bash
-cd blogger-front
-npm install
-Usa el código con precaución.
-Running the Projects
+docker-compose up -d
+```
+
 Without Docker Compose:
 
 Backend: Follow the manual installation steps mentioned in the "Getting Started" section to install dependencies for each Go project (if not using Docker Compose). Then, navigate to the specific API project directory and run go run main.go to start the application.
@@ -57,14 +46,15 @@ Execute the initdb.sql script within your database client.
 Contributing
 We welcome contributions to this project! Please see the CONTRIBUTING.md file (if you have one) for details on how to submit pull requests.
 
-License
+## License
+
 This project is licensed under the [License Name] license. See the LICENSE file for details.
 
-Additional Information
+## Additional Information
+
 Feel free to add any further details specific to your project, such as:
 Links to project documentation (if any).
 Troubleshooting tips.
 Testing instructions.
 Consider including a section on how the backend and frontend interact (if applicable).
-Contact information for developers (optional).
-```
+Contact information for developers www.diegovillafane.com.
