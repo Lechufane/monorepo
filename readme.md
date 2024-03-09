@@ -1,10 +1,12 @@
-[Your Monorepo Name]
+###Blogger monorepo
 This repository is a monorepo containing a backend and frontend for a blogger application:
 
-Backend (blogger-back):
+##Backend (blogger-back):
 apis: This folder contains 2 Go projects that act as APIs for your application.
 middlend: This Go project serves as a middleware component for the backend.
-Frontend (blogger-front): This folder contains a Next.js project that serves as the user interface for the blogger application.
+
+##Frontend (blogger-front):
+This folder contains a Next.js project that serves as the user interface for the blogger application.
 
 [Your Monorepo Name]
 This repository is a monorepo containing a backend and frontend for a blogger application:
@@ -20,14 +22,16 @@ Go 1.x (refer to https://go.dev/doc/install for installation instructions)
 Node.js and npm (refer to https://nodejs.org/en for installation instructions)
 Clone the repository:
 
-Bash
+```
 git clone https://https://docs.github.com/articles/cloning-a-repository
 Usa el código con precaución.
 Setup:
+```
 
 Navigate to the root directory of the repository:
-Bash
-cd [Your Monorepo Name]
+
+```
+cd [monorepo]
 Usa el código con precaución.
 (Optional, if not using Docker Compose): Install dependencies for the backend Go projects:
 Bash
@@ -69,3 +73,4 @@ Troubleshooting tips.
 Testing instructions.
 Consider including a section on how the backend and frontend interact (if applicable).
 Contact information for developers (optional).
+```
