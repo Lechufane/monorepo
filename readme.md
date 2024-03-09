@@ -1,11 +1,14 @@
-###Blogger monorepo
+### Blogger monorepo
+
 This repository is a monorepo containing a backend and frontend for a blogger application:
 
-##Backend (blogger-back):
+## Backend (blogger-back):
+
 apis: This folder contains 2 Go projects that act as APIs for your application.
 middlend: This Go project serves as a middleware component for the backend.
 
-##Frontend (blogger-front):
+## Frontend (blogger-front):
+
 This folder contains a Next.js project that serves as the user interface for the blogger application.
 
 [Your Monorepo Name]
