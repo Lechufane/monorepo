@@ -13,6 +13,7 @@ This folder contains a Next.js project that serves as the user interface for the
 
 ### Prerequisites:
 
+- Docker and Docker Compose (refer to https://docs.docker.com/get-docker for installation instructions) _this should be the only thing you need to install_ to run the project.
 - Go 1.x (refer to https://go.dev/doc/install for installation instructions)
 - Node.js and npm (refer to https://nodejs.org/en for installation instructions)
 - Clone the repository:
@@ -29,22 +30,10 @@ cd [monorepo]
 docker-compose up -d
 ```
 
-Without Docker Compose:
-
-Backend: Follow the manual installation steps mentioned in the "Getting Started" section to install dependencies for each Go project (if not using Docker Compose). Then, navigate to the specific API project directory and run go run main.go to start the application.
-Frontend: Navigate to the blogger-front directory and run npm install to install dependencies (if not using Docker Compose), followed by npm run dev to start the development server. This will typically start the server on http://localhost:3000 by default (you can check the output for the specific port).
-With Docker Compose (if applicable):
-
 The docker-compose.yml file (if present) might define how dependencies are installed and managed for each service. Refer to the specific instructions within the docker-compose.yml file for details on running the projects using Docker Compose. This might involve a command like docker-compose up -d to start all services in the background.
 
 Migrations
-The initdb.sql file contains the initial database schema for your projects. To apply the migrations, follow these steps (modify based on your setup):
-
-Run a database container (e.g., with Docker Compose).
-Connect to the database using your preferred tool.
-Execute the initdb.sql script within your database client.
-Contributing
-We welcome contributions to this project! Please see the CONTRIBUTING.md file (if you have one) for details on how to submit pull requests.
+The initdb.sql file contains the initial database schema for your projects. To apply the migrations, just run the docker-compose command and it should run the automatically.
 
 ## License
 
