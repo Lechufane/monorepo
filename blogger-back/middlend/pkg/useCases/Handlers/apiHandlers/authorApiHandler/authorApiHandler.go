@@ -56,3 +56,18 @@ func GetAuthorByEmail(email string) (string, response.Status) {
 
 	return email, response.SuccessfulSearch
 }
+
+func RegisterAuthor(authorApi apiAuthor.Author) response.Status {
+	postUrl := os.Getenv("AUTHORS_API") + constants.AUTHOR_API_ROUTES + "/author"
+
+	res, status := requestHelper.PostRequest(postUrl, authorApi)
+	if status != response.SuccessfulSearch {
+		return response.AuthorApiError
+	}
+
+	if res.StatusCode != http.StatusCreated {
+		return response.InternalServerError
+	}
+
+	return response.SuccessfulSearch
+}

@@ -18,6 +18,17 @@ func AuthorApiToView(authorApi apiAuthor.Author) author.Author {
 	return authorResponse
 }
 
+func AuthorViewToApi(authorView author.Author) apiAuthor.Author {
+	var authorResponse = apiAuthor.Author{
+		Id:       authorView.Id,
+		Name:     authorView.Name,
+		Username: authorView.Username,
+		Email:    authorView.Email,
+	}
+
+	return authorResponse
+}
+
 func BlogsApiToView(authorView author.Author, blogsApi []apiBlog.Blog) []blog.Blog {
 	var blogsResponse []blog.Blog
 	for _, blogApi := range blogsApi {

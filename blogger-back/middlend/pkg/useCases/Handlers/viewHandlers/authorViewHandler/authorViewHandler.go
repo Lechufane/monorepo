@@ -2,6 +2,7 @@ package authorViewHandler
 
 import (
 	"mod-middlend/pkg/domain/innerDomain/response"
+	"mod-middlend/pkg/domain/outerDomain/author"
 	"mod-middlend/pkg/useCases/Handlers/apiHandlers/authorApiHandler"
 	"mod-middlend/pkg/useCases/Handlers/apiHandlers/blogApiHandler"
 )
@@ -34,4 +35,12 @@ func GetAuthorByEmail(email string) (interface{}, response.Status) {
 	}
 
 	return email, response.SuccessfulSearch
+}
+
+func RegisterAuthor(authorForm author.Author) response.Status {
+
+	authorViewToAuhtorApi := AuthorViewToApi(authorForm)
+	status := authorApiHandler.RegisterAuthor(authorViewToAuhtorApi)
+	return status
+
 }

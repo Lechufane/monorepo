@@ -58,8 +58,9 @@ const Index: React.FC = () => {
       <div className="w-full p-8 h-40 flex items-center justify-center">
         <Title
           title="Find adventures"
-          className={cn("bg-red-600 whitespace-nowrap ", styles.title)}
+          className={cn("bg-red-600 whitespace-nowrap")}
           topLeft
+          size="large"
         />
       </div>
       <div className="flex flex-col items-center justify-center my-2 mx-auto max-w-[980px]">

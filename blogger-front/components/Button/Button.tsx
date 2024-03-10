@@ -5,7 +5,7 @@ import styles from "./Button.module.css";
 interface Props {
   loading: boolean;
   handleClick: () => void;
-  label: string | null | undefined;
+  label?: string | null | undefined;
   size: "fit" | "small" | "medium" | "large" | "xLarge";
   bodyType: "slim";
   className: string;

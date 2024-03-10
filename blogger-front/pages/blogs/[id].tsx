@@ -61,9 +61,10 @@ const SingleBlog = () => {
           <Title
             title={blog.title}
             className={cn(
-              "bg-red-600 whitespace-nowrap max-w-auto text-[#ff9f1c]",
+              "bg-red-600 whitespace-nowrap max-w-auto text-[#ff9f1c] max-w-[",
               styles.title
             )}
+            size="large"
             topLeft
           />
         </div>

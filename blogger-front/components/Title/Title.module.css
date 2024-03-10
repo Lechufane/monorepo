@@ -1,3 +1,18 @@
 .title {
   font-family: "Bebas Neue", sans-serif;
 }
+
+.large {
+  font-size: 5rem /* 48px */;
+  line-height: 5.5rem /* 56px */;
+}
+
+.medium {
+  font-size: 2.5rem /* 36px */;
+  line-height: 2.6rem /* 42px */;
+}
+
+.small {
+  font-size: 1.5rem;
+  line-height: 1.6rem;
+}

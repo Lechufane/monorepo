@@ -5,6 +5,8 @@ export const inputs = [
     name: "title",
     placeholder: "Title",
     className: "text-black",
+    value: "",
+    maxLength: 40,
   },
   {
     id: 2,
@@ -12,6 +14,7 @@ export const inputs = [
     name: "content",
     placeholder: "Description",
     maxLength: 500,
+    value: "",
   },
   {
     id: 3,

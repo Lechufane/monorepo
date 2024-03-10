@@ -1,50 +1,40 @@
 import { useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Button from "@/components/Button";
-import { inputs, validator } from "@/services/constants/blogForm";
 import cn from "@/utils/classNames";
-import styles from "./BlogForm.module.css";
 import logger from "@/utils/logger";
 import useForm from "@/hooks/useForm";
-import { set } from "firebase/database";
 import { useRouter } from "next/router";
-
-const INITIAL_FORM = {
-  title: "",
-  description: "",
-  image: null,
-  authorId: 1,
-};
-
-const INITIAL_ERRORS = {
-  title: "",
-  description: "",
-  image: "",
-};
 
 interface Props {
   className?: string;
-  headerTitle?: string;
-  backHref?: string;
   modifyExperience?: boolean;
   initialForm?: object;
   submitService: (payload: object) => Promise<{ ok: boolean }>;
   submitLabel?: string;
+  initialErrors?: object;
+  inputs: object;
+  validator?: any;
+  forwardTo?: string;
 }
 
-const BlogForm: React.FC<Props> = ({
+const FormView: React.FC<Props> = ({
   className,
-  initialForm = INITIAL_FORM,
+  initialForm,
   submitService,
   submitLabel,
+  initialErrors,
+  inputs,
+  validator,
+  forwardTo,
 }: Props): JSX.Element => {
   const router = useRouter();
 
   // ---------- HOOKS ---------- //
-  const { form, formBuilder, errors, setForm, handleChange }: any = useForm(
-    INITIAL_FORM,
+  const { form, formBuilder, errors, setForm }: any = useForm(
+    initialForm,
     validator,
-    INITIAL_ERRORS
+    initialErrors
   );
 
   const [loading, setLoading] = useState(false);
@@ -60,16 +50,11 @@ const BlogForm: React.FC<Props> = ({
     const { ok } = await submitService(payload);
     setLoading(false);
     if (ok) {
-      router.push("/blogs");
+      router.push(forwardTo || "/blogs");
     }
   };
 
   // ---------- EFFECTS ---------- //
-
-  useEffect(() => {
-    logger.debug("form", form);
-  }, [form]);
-
   useEffect(() => {
     // If the initialForm prop changes, update the form state.
     setForm((prevForm: any) => ({ ...prevForm, ...initialForm }));
@@ -79,16 +64,16 @@ const BlogForm: React.FC<Props> = ({
 
   const handleDisabled = () => {
     //check if input is empty
-    if (form.title === "" || (form.content === "" && form.image !== null)) {
-      return true;
+    for (const input in form) {
+      if (!form[input]) {
+        return true;
+      }
     }
     //check if there are errors
-    if (errors.title !== "" || errors.content !== "" || errors.image !== "") {
-      return true;
-    }
-    //check if the form is loading
-    if (loading) {
-      return true;
+    for (const error in errors) {
+      if (errors[error]) {
+        return true;
+      }
     }
     return false;
   };
@@ -105,7 +90,13 @@ const BlogForm: React.FC<Props> = ({
 
   return (
     <>
-      <form onSubmit={handleSubmit} className={cn(styles.form, className, "")}>
+      <form
+        onSubmit={handleSubmit}
+        className={cn(
+          className,
+          "mx-auto relative w-full px-3 flex flex-col gap-2"
+        )}
+      >
         {formBuilder(inputs)}
         <SubmitButton
           size="medium"
@@ -116,23 +107,19 @@ const BlogForm: React.FC<Props> = ({
   );
 };
 
-BlogForm.propTypes = {
+FormView.propTypes = {
   className: PropTypes.string,
-  headerTitle: PropTypes.string,
-  backHref: PropTypes.string,
   modifyExperience: PropTypes.bool,
   initialForm: PropTypes.object,
   submitService: PropTypes.func.isRequired,
   submitLabel: PropTypes.string,
 };
 
-BlogForm.defaultProps = {
+FormView.defaultProps = {
   className: "",
-  headerTitle: "",
-  backHref: "",
   modifyExperience: false,
   initialForm: {},
   submitLabel: "Enviar",
 };
 
-export default BlogForm;
+export default FormView;

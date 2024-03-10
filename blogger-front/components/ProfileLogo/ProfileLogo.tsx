@@ -69,16 +69,8 @@ const ProfileLogo = ({ title, size = "medium", className }: Props) => {
           <Title
             title={title}
             topLeft
-            className={cn(
-              "font-semibold bg-red-600 z-20 absolute bottom-0",
-              size === "small"
-                ? "text-xs"
-                : size === "medium"
-                ? "text-3xl"
-                : size === "large"
-                ? "text-6xl"
-                : null
-            )}
+            className={cn("font-semibold bg-red-600 z-20 absolute bottom-0")}
+            size="small"
           />
         </div>
       </div>

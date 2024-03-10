@@ -25,7 +25,6 @@ const login: React.FC = () => {
   const handleLogin = async (e: any): Promise<void> => {
     e.preventDefault();
     setLoading(true);
-    logger.debug("Logging in with email", loginInput.email);
     const { ok, data } = await AuthServices.Login(loginInput.email);
     setLoading(false);
     if (!ok) {
@@ -41,25 +40,29 @@ const login: React.FC = () => {
       <Title
         title="Login"
         className={cn(
-          "bg-red-600 whitespace-nowrap max-w-auto text-[#ff9f1c] text-8xl mx-auto"
+          "bg-red-600 whitespace-nowrap max-w-auto text-[#ff9f1c] mx-auto"
         )}
         topLeft
+        size="large"
       />
       <form
         onSubmit={handleLogin}
         className={cn(
-          "min-h-screen w-full text-center max-w-[400px] grid justify-items-center items-start mx-auto py-7 px-3"
+          "min-h-screen w-full text-center max-w-[700px] grid justify-items-center items-start mx-auto py-7 px-3"
         )}
       >
         <div className="w-full flex flex-col justify-center items-center py-5">
-          <h2 className="text-2xl font-semibold mb-5">Iniciar sesión</h2>
+          <h2 className="text-2xl font-semibold mb-5">
+            Let the adventure begin!
+          </h2>
           <Input
             value={loginInput["email"]}
             name="email"
             type="email"
             size="large"
+            maxLength={50}
             placeholder="Email"
-            className="font-semibold mb-4"
+            className="font-semibold mb-4 w-full"
             handleChange={handleChange}
             errorMessage={errorMessage}
           />
@@ -75,13 +78,12 @@ const login: React.FC = () => {
         </div>
 
         <Button
-          disabled={loginInput["email"].length === 0}
+          disabled={loading || loginInput["email"].length === 0}
           className="mt-7 mb-5"
           loading={loading}
           handleClick={handleLogin as () => Promise<void>} // Update the type of handleClick prop
-          size={"large" as any}
-          label={undefined}
-          bodyType={"slim"}
+          size="large"
+          bodyType="slim"
         >
           Continuar
         </Button>

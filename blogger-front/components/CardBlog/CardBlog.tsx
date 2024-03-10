@@ -54,7 +54,7 @@ const CardBlog: React.FC<Props> = ({
 
       <div className="flex-coll justify-between w-full overflow-hidden m-2 p-4 z-20">
         <div className="flex justify-between w-full items-center gap-2">
-          <Title title={title} className={cn("bg-red-500", styles.title)} />
+          <Title title={title} className={cn("bg-red-500")} size="small" />
         </div>
         <div className="flex flex-col w-full justify-around items-end gap-2">
           <p className={cn("text-white text-sm p-8", styles.contentText)}>
