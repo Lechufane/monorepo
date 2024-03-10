@@ -5,7 +5,9 @@ import HeaderBack from "@/components/HeaderBack";
 import Title from "@/components/Title";
 import { inputs, validator } from "@/services/constants/blogForm";
 import cn from "@/utils/classNames";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
+import AuthorsService from "@/services/AuthorsService";
+import AuthServices from "@/services/AuthServices";
 
 const INITIAL_ERRORS = {
   title: "",
@@ -17,16 +19,33 @@ const INITIAL_FORM = {
   title: "",
   content: "",
   image: null,
-  authorId: 1,
+  authorId: 0,
 };
 
 const CreateBlog = () => {
   const router = useRouter();
 
-  useEffect(() => {
-    if (!localStorage.getItem("token")) {
+  const [initialForm, setInitialForm] = useState(INITIAL_FORM);
+
+  const validateUser = async () => {
+    const email = localStorage.getItem("token");
+
+    if (!email) {
       router.push("/auth/login");
     }
+
+    const response = await AuthServices.Login(email);
+    const { ok, data } = response;
+    if (ok) {
+      setInitialForm({
+        ...initialForm,
+        authorId: data.id,
+      });
+    }
+  };
+
+  useEffect(() => {
+    validateUser();
   }, []);
 
   return (
@@ -42,7 +61,7 @@ const CreateBlog = () => {
       </div>
       <div className="w-full flex flex-col gap-1 p-3 mb-[2rem] max-w-[700px] mx-auto ">
         <FormView
-          initialForm={INITIAL_FORM}
+          initialForm={initialForm}
           initialErrors={INITIAL_ERRORS}
           submitLabel="Send us your adventure!"
           submitService={BlogsService.createBlog as any}
