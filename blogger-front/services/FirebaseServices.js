@@ -14,7 +14,6 @@ const storage = getStorage();
 const FirebaseServices = {
   /** Uploads file to Firebase. Returns file Firebase URL. */
   uploadFile: async (file, fileName) => {
-    logger.debug("FirebaseServices", "uploadFile", { file, fileName });
     try {
       const fileStoreRef = ref(
         storage,

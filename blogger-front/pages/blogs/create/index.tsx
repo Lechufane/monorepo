@@ -5,24 +5,29 @@ import HeaderBack from "@/components/HeaderBack";
 import Title from "@/components/Title";
 import { inputs, validator } from "@/services/constants/blogForm";
 import cn from "@/utils/classNames";
-import styles from "@/styles/Blogs.module.css";
-import { useState } from "react";
+import { useEffect } from "react";
 
 const INITIAL_ERRORS = {
   title: "",
-  description: "",
+  content: "",
   image: "",
 };
 
 const INITIAL_FORM = {
   title: "",
-  description: "",
+  content: "",
   image: null,
   authorId: 1,
 };
 
 const CreateBlog = () => {
   const router = useRouter();
+
+  useEffect(() => {
+    if (!localStorage.getItem("token")) {
+      router.push("/auth/login");
+    }
+  }, []);
 
   return (
     <>
@@ -40,9 +45,10 @@ const CreateBlog = () => {
           initialForm={INITIAL_FORM}
           initialErrors={INITIAL_ERRORS}
           submitLabel="Send us your adventure!"
-          submitService={BlogsService.createBlog}
+          submitService={BlogsService.createBlog as any}
           inputs={inputs}
           validator={validator}
+          forwardTo="/blogs"
         />
       </div>
     </>

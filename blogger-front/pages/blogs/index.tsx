@@ -46,7 +46,6 @@ const Index: React.FC = () => {
       return;
     }
     setBlogs(data);
-    logger.debug("Fetched blogs", data);
   };
 
   useEffect(() => {

@@ -6,6 +6,7 @@ export const inputs = [
     placeholder: "Name",
     className: "text-black",
     value: "",
+    size: "large",
   },
   {
     id: 2,

@@ -21,8 +21,6 @@ const useForm = (
   };
 
   const handleFieldChange = (name) => (value) => {
-    logger.debug("name", name);
-    logger.debug("value", value?.target);
     setForm({
       ...form,
       [name]: value?.target?.value || value,

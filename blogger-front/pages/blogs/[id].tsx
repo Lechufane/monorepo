@@ -46,7 +46,6 @@ const SingleBlog = () => {
       return;
     }
     setBlog(data);
-    logger.debug("Fetched blog", data);
   };
 
   useEffect(() => {

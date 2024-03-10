@@ -29,12 +29,12 @@ func GetAuthor(authorId int) (interface{}, response.Status) {
 func GetAuthorByEmail(email string) (interface{}, response.Status) {
 
 	//check if email is valid, and return it if it is
-	email, status := authorApiHandler.GetAuthorByEmail(email)
+	author, status := authorApiHandler.GetAuthorByEmail(email)
 	if status != response.SuccessfulSearch {
 		return nil, status
 	}
 
-	return email, response.SuccessfulSearch
+	return author, response.SuccessfulSearch
 }
 
 func RegisterAuthor(authorForm author.Author) response.Status {

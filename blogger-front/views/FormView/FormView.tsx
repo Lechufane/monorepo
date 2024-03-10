@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { use, useEffect, useState } from "react";
 import PropTypes from "prop-types";
 import Button from "@/components/Button";
 import cn from "@/utils/classNames";
@@ -10,7 +10,7 @@ interface Props {
   className?: string;
   modifyExperience?: boolean;
   initialForm?: object;
-  submitService: (payload: object) => Promise<{ ok: boolean }>;
+  submitService: (payload?: object) => Promise<{ ok: boolean }>;
   submitLabel?: string;
   initialErrors?: object;
   inputs: object;
@@ -46,12 +46,13 @@ const FormView: React.FC<Props> = ({
     setLoading(true);
 
     const payload = { ...form };
-    logger.debug("payload", payload);
     const { ok } = await submitService(payload);
     setLoading(false);
     if (ok) {
       router.push(forwardTo || "/blogs");
+      return;
     }
+    router.push("/auth/register");
   };
 
   // ---------- EFFECTS ---------- //
@@ -63,12 +64,16 @@ const FormView: React.FC<Props> = ({
   // ---------- CONSTANTS ---------- //
 
   const handleDisabled = () => {
-    //check if input is empty
     for (const input in form) {
-      if (!form[input]) {
+      if (form[input] === "" || form[input] === null) {
         return true;
       }
     }
+
+    if (loading) {
+      return true;
+    }
+
     //check if there are errors
     for (const error in errors) {
       if (errors[error]) {
@@ -77,7 +82,6 @@ const FormView: React.FC<Props> = ({
     }
     return false;
   };
-
   const SubmitButton = (props: any) => (
     <Button
       handleClick={handleSubmit}

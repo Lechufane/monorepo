@@ -31,7 +31,7 @@ const login: React.FC = () => {
       router.push(`/auth/register`);
       return;
     }
-    localStorage.setItem("token", data);
+    localStorage.setItem("token", data.email);
     router.push(`/blogs`);
   };
 
@@ -62,7 +62,7 @@ const login: React.FC = () => {
             size="large"
             maxLength={50}
             placeholder="Email"
-            className="font-semibold mb-4 w-full"
+            className="font-semibold mb-4"
             handleChange={handleChange}
             errorMessage={errorMessage}
           />

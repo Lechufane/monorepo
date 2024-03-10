@@ -22,6 +22,7 @@ export const inputs = [
     accept: "image/*",
     multiple: false,
     name: "image",
+    value: "",
     placeholder: "Blog image",
     size: "large",
     maxSize: 1000000,

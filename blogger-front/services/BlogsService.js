@@ -1,4 +1,6 @@
+import logger from "@/utils/logger";
 import request from ".";
+import AuthServices from "./AuthServices";
 
 const BlogsService = {
   getBlogs: async () => await request("/blog"),
@@ -12,4 +14,5 @@ const BlogsService = {
       body: JSON.stringify(blog),
     }),
 };
+
 export default BlogsService;

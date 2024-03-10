@@ -41,7 +41,6 @@ const SingleAuthor: React.FC = () => {
       return;
     }
     setAuthor(data);
-    logger.debug("Fetched author", data);
   };
 
   useEffect(() => {

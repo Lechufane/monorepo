@@ -35,33 +35,36 @@ func GetAuthorById(authorId int) (apiAuthor.Author, response.Status) {
 	return author, response.SuccessfulSearch
 }
 
-func GetAuthorByEmail(email string) (string, response.Status) {
-
-	// getUrl := constants.LOCAL_AUTHOR_API + constants.AUTHOR_API_ROUTES + "/author/email?email=" + email // This is for local testing. Comment this line of code when deploying.
-	// fmt.Println(getUrl)
+func GetAuthorByEmail(email string) (apiAuthor.Author, response.Status) {
 
 	getUrl := os.Getenv("AUTHORS_API") + constants.AUTHOR_API_ROUTES + "/author/email?email=" + email
 
 	res, status := requestHelper.GetRequest(getUrl)
 	if status != response.SuccessfulSearch {
-		return "", response.AuthorApiError
+		return apiAuthor.Author{}, response.AuthorApiError
 	}
 
 	if res.StatusCode != http.StatusOK {
 		if res.StatusCode == http.StatusNotFound {
-			return "", response.NotFound
+			return apiAuthor.Author{}, response.NotFound
 		}
-		return "", response.InternalServerError
+		return apiAuthor.Author{}, response.InternalServerError
 	}
 
-	return email, response.SuccessfulSearch
+	var author apiAuthor.Author
+	status = responseHelper.ParseResponseStruct(&author, res)
+	if status != response.SuccessfulParse {
+		return apiAuthor.Author{}, status
+	}
+
+	return author, response.SuccessfulSearch
 }
 
 func RegisterAuthor(authorApi apiAuthor.Author) response.Status {
 	postUrl := os.Getenv("AUTHORS_API") + constants.AUTHOR_API_ROUTES + "/author"
 
 	res, status := requestHelper.PostRequest(postUrl, authorApi)
-	if status != response.SuccessfulSearch {
+	if status != response.SuccessfulCreation {
 		return response.AuthorApiError
 	}
 
@@ -69,5 +72,5 @@ func RegisterAuthor(authorApi apiAuthor.Author) response.Status {
 		return response.InternalServerError
 	}
 
-	return response.SuccessfulSearch
+	return response.SuccessfulCreation
 }
