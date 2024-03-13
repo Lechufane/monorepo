@@ -16,3 +16,37 @@
   font-size: 1.5rem;
   line-height: 1.6rem;
 }
+
+@media (max-width: 768px) {
+  .large {
+    font-size: 4.5rem;
+    line-height: 4.5rem;
+  }
+
+  .medium {
+    font-size: 2rem /* 36px */;
+    line-height: 2.1rem /* 42px */;
+  }
+
+  .small {
+    font-size: 1.2rem;
+    line-height: 1.3rem;
+  }
+}
+
+@media (max-width: 320px) {
+  .large {
+    font-size: 3.5rem;
+    line-height: 3.5rem;
+  }
+
+  .medium {
+    font-size: 1.8rem;
+    line-height: 1.9rem;
+  }
+
+  .small {
+    font-size: 1rem;
+    line-height: 1.1rem;
+  }
+}

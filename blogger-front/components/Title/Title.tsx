@@ -15,7 +15,8 @@ const Title = ({ title, className, topLeft, size }: Props) => {
         "w-fit px-2",
         topLeft ? "skew-y-3 skew-x-6" : "-skew-y-6 skew-x-3",
         className,
-        styles[`${size}`]
+        styles[`${size}`],
+        styles.titleWrapper
       )}
     >
       <p className={cn("text-center font-semibold", styles.title)}>{title}</p>
