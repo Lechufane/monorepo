@@ -7,9 +7,8 @@ services:
   database:
     image: mysql:latest  # Use the official MySQL image (you can choose a specific version if needed)
     restart: always  # Restart the container automatically unless manually stopped
-    environment:
-      MYSQL_ROOT_PASSWORD: root  # Set the root password (replace with a strong password)
-      MYSQL_DATABASE: blogger_author  # Create a database named blogger_author
+    env_file:
+      - ./.env  # Load environment variables from the specified file
     volumes:
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql # Execute the SQL commands when the container starts
       - dbdata:/var/lib/mysql  # Store the MySQL data on the named volume
@@ -20,9 +19,8 @@ services:
   authors-api:
     build: ./blogger-back/authors-api # Build the Dockerfile in the specified directory
     restart: always  # Restart the container automatically unless manually stopped
-    environment:
-      - PORT=8082  # Set the PORT environment variable
-      - DB=root:root@(database:3306)  # Set the DB environment variable
+    env_file:
+      - ./blogger-back/authors-api/.env  # Load environment variables from the specified file
     ports: 
       - "8082:8082"  # Map the container port 8082 to host port 8082
     networks:
@@ -32,9 +30,8 @@ services:
   blogs-api:
     build: ./blogger-back/blogs-api # Build the Dockerfile in the specified directory
     restart: always  # Restart the container automatically unless manually stopped
-    environment:
-      - PORT=8081  # Set the PORT environment variable
-      - DB=root:root@(database:3306) # Set the DB environment variable
+    env_file:
+      - ./blogger-back/blogs-api/.env  # Load environment variables from the specified file
     ports: 
       - "8081:8081"  # Map the container port 8081 to host port 8081
     networks:
@@ -44,10 +41,8 @@ services:
   middlend:
     build: ./blogger-back/middlend # Build the Dockerfile in the specified directory
     restart: always # Restart the container automatically unless manually stopped
-    environment:
-      - PORT=8080  # Set the PORT environment variable
-      - BLOGS_API=http://blogs-api:8081  # Set the BLOGS_API environment variable
-      - AUTHORS_API=http://authors-api:8082  # Set the AUTHORS_API environment variable
+    env_file:
+      - ./blogger-back/middlend/.env  # Load environment variables from the specified file
     ports:
       - "8080:8080"  # Map the container port 8080 to host port 8080
     networks:
@@ -58,9 +53,8 @@ services:
   frontend:
     build: ./blogger-front # Build the Dockerfile in the specified directory
     restart: always  # Restart the container automatically unless manually stopped
-    environment:
-      - PORT=3000  # Set the PORT environment variable
-      - BASE_PATH=http://middlend:8080  # Set the MIDDLEND environment variable
+    env_file:
+      - ./blogger-front/.env  # Load environment variables from the specified file
     ports:
       - "3000:3000"  # Map the container port 3000 to host port 3000
     networks:

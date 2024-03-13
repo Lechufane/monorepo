@@ -18,11 +18,10 @@ const HeaderBack = ({ text, className }: Props) => {
   return (
     <div
       className={cn(
-        "sticky top-5 z-50 cursor-pointer flex justify-start gap-3",
+        "sticky top-5 z-50 flex justify-start gap-3",
         styles.text,
         className
       )}
-      onClick={handleClick}
     >
       <Img
         src={arrowBack}
@@ -30,6 +29,7 @@ const HeaderBack = ({ text, className }: Props) => {
         width={40}
         height={40}
         className="cursor-pointer"
+        onClick={handleClick}
       />
       <p className="text-white text-3xl self-start">{text}</p>
     </div>

@@ -11,7 +11,7 @@ export const APP_KEYNAME = "blogger";
 export const APP_NAME = "Blogger";
 
 // eslint-disable-next-line no-unused-vars
-const LOCAL_URL = "http://localhost:8080";
+const LOCAL_URL = "http://localhost:3000";
 
 // WARNING: This BASE_PATH variable is only available on the server side.
 // All these url values on the client side are not reliable and may differ from the server side.
